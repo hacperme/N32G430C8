@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file      n32g430_spi.c
 *\*\author    Nations
-*\*\version   v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved. 
+*\*\version   v1.0.2
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved. 
 **/
 
 #include "n32g430_spi.h"
@@ -103,9 +123,9 @@ void SPI_OFF(SPI_Module* SPIx)
 *\*\          - DataLen
 *\*\          - CLKPOL
 *\*\          - CLKPHA
-*\*\          - NSS      
-*\*\          - BaudRatePres     
-*\*\          - FirstBit      
+*\*\          - NSS
+*\*\          - BaudRatePres
+*\*\          - FirstBit
 *\*\          - CRCPoly
 *\*\return  none
 **/
@@ -142,37 +162,37 @@ void SPI_Initializes_Structure(SPI_InitType* SPI_InitStruct)
 *\*\param   SPI_InitStruct :
 *\*\          - DataDirection
 *\*\            - SPI_DIR_DOUBLELINE_FULLDUPLEX
-*\*\            - SPI_DIR_DOUBLELINE_RONLY     
-*\*\            - SPI_DIR_SINGLELINE_RX        
-*\*\            - SPI_DIR_SINGLELINE_TX        
+*\*\            - SPI_DIR_DOUBLELINE_RONLY
+*\*\            - SPI_DIR_SINGLELINE_RX
+*\*\            - SPI_DIR_SINGLELINE_TX
 *\*\          - SpiMode
 *\*\            - SPI_MODE_MASTER
-*\*\            - SPI_MODE_SLAVE 
+*\*\            - SPI_MODE_SLAVE
 *\*\          - DataLen
 *\*\            - SPI_DATA_SIZE_16BITS
-*\*\            - SPI_DATA_SIZE_8BITS     
+*\*\            - SPI_DATA_SIZE_8BITS
 *\*\          - CLKPOL
-*\*\            - SPI_CLKPOL_LOW 
+*\*\            - SPI_CLKPOL_LOW
 *\*\            - SPI_CLKPOL_HIGH
 *\*\          - CLKPHA
-*\*\            - SPI_CLKPHA_FIRST_EDGE 
+*\*\            - SPI_CLKPHA_FIRST_EDGE
 *\*\            - SPI_CLKPHA_SECOND_EDGE
 *\*\          - NSS
 *\*\            - SPI_NSS_SOFT
 *\*\            - SPI_NSS_HARD
 *\*\          - BaudRatePres
-*\*\            - SPI_BR_PRESCALER_2  
-*\*\            - SPI_BR_PRESCALER_4  
-*\*\            - SPI_BR_PRESCALER_8  
-*\*\            - SPI_BR_PRESCALER_16 
-*\*\            - SPI_BR_PRESCALER_32 
-*\*\            - SPI_BR_PRESCALER_64 
+*\*\            - SPI_BR_PRESCALER_2
+*\*\            - SPI_BR_PRESCALER_4
+*\*\            - SPI_BR_PRESCALER_8
+*\*\            - SPI_BR_PRESCALER_16
+*\*\            - SPI_BR_PRESCALER_32
+*\*\            - SPI_BR_PRESCALER_64
 *\*\            - SPI_BR_PRESCALER_128
 *\*\            - SPI_BR_PRESCALER_256
 *\*\          - FirstBit
 *\*\            - SPI_FB_MSB
 *\*\            - SPI_FB_LSB
-*\*\          - CRCPoly      default 0x0007, max 0xffff 
+*\*\          - CRCPoly      default 0x0007, max 0xffff
 *\*\return  none
 **/
 void SPI_Initializes(SPI_Module* SPIx, SPI_InitType* SPI_InitStruct)
@@ -180,7 +200,7 @@ void SPI_Initializes(SPI_Module* SPIx, SPI_InitType* SPI_InitStruct)
     SPI_DataDirection_Config(SPIx, SPI_InitStruct->DataDirection);
     SPI_SpiMode_Config(SPIx, SPI_InitStruct->SpiMode);
     SPI_DataLen_Config(SPIx, SPI_InitStruct->DataLen);
-	SPI_CLKPHA_Config(SPIx, SPI_InitStruct->CLKPHA);
+    SPI_CLKPHA_Config(SPIx, SPI_InitStruct->CLKPHA);
     SPI_CLKPOL_Config(SPIx, SPI_InitStruct->CLKPOL);
     SPI_NSS_Config(SPIx, SPI_InitStruct->NSS);
     SPI_BaudRatePres_Config(SPIx, SPI_InitStruct->BaudRatePres);
@@ -190,15 +210,15 @@ void SPI_Initializes(SPI_Module* SPIx, SPI_InitType* SPI_InitStruct)
 
 
 /**
-*\*\name     SPI_DataDirection_Config.
-*\*\fun     Config the SPIx DataDirection.
+*\*\name    SPI_DataDirection_Config.
+*\*\fun     Configure SPIx data transfer direction.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\param   DataDirection :
 *\*\          - SPI_DIR_DOUBLELINE_FULLDUPLEX
-*\*\          - SPI_DIR_DOUBLELINE_RONLY     
-*\*\          - SPI_DIR_SINGLELINE_RX        
+*\*\          - SPI_DIR_DOUBLELINE_RONLY
+*\*\          - SPI_DIR_SINGLELINE_RX
 *\*\          - SPI_DIR_SINGLELINE_TX
 *\*\return  none
 **/
@@ -213,7 +233,7 @@ void SPI_DataDirection_Config(SPI_Module* SPIx, uint16_t DataDirection)
 
 /**
 *\*\name    SPI_SpiMode_Config.
-*\*\fun     Config the SPIx mode.
+*\*\fun     Configure SPIx to work in master or slave mode.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -233,7 +253,7 @@ void SPI_SpiMode_Config(SPI_Module* SPIx, uint16_t SpiMode)
 
 /**
 *\*\name    SPI_DataLen_Config.
-*\*\fun     Config the SPIx DataLen.
+*\*\fun     Configure SPIx data length.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -254,7 +274,7 @@ void SPI_DataLen_Config(SPI_Module* SPIx, uint16_t DataLen)
 
 /**
 *\*\name    SPI_CLKPOL_Config.
-*\*\fun     Config the SPIx CLKPOL.
+*\*\fun     Configure the SPIx clock polarity.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -274,7 +294,7 @@ void SPI_CLKPOL_Config(SPI_Module* SPIx, uint16_t CLKPOL)
 
 /**
 *\*\name    SPI_CLKPHA_Config.
-*\*\fun     Config the SPIx CLKPHA.
+*\*\fun     Configure the SPIx clock phase.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -291,30 +311,9 @@ void SPI_CLKPHA_Config(SPI_Module* SPIx, uint16_t CLKPHA)
     SPIx->CTRL1 |= CLKPHA;
 }
 
-
-/**
-*\*\name    SPI_NSS_Config.
-*\*\fun     Config the SPIx NSS.
-*\*\param   SPIx :
-*\*\          - SPI1
-*\*\          - SPI2
-*\*\param   NSS :
-*\*\          - SPI_NSS_SOFT
-*\*\          - SPI_NSS_HARD
-*\*\return  none
-**/
-void SPI_NSS_Config(SPI_Module* SPIx, uint16_t NSS)
-{
-    /* Clear SPI_CTRL1 SSMEN bits */
-    SPIx->CTRL1 &= SPI_NSS_MASK;
-    /* Set SPI_CTRL1 SSMEN bits */
-    SPIx->CTRL1 |= NSS;
-}
-
-
 /**
 *\*\name    SPI_BaudRatePres_Config.
-*\*\fun     Config the SPIx BaudRatePres.
+*\*\fun     Configure the SPIx BaudRate prescaler.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -340,7 +339,7 @@ void SPI_BaudRatePres_Config(SPI_Module* SPIx, uint16_t BaudRatePres)
 
 /**
 *\*\name    SPI_FirstBit_Config.
-*\*\fun     Config the SPIx FirstBit.
+*\*\fun     Configure the SPIx data bit order.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -359,8 +358,31 @@ void SPI_FirstBit_Config(SPI_Module* SPIx, uint16_t FirstBit)
 
 
 /**
+*\*\name    SPI_NSS_Config.
+*\*\fun     Configure the SPIx NSS to work in 
+*\*\        software or hardware management mode.
+*\*\param   SPIx :
+*\*\          - SPI1
+*\*\          - SPI2
+*\*\param   NSS :
+*\*\          - SPI_NSS_SOFT
+*\*\          - SPI_NSS_HARD
+*\*\return  none
+*\*\note    If the host wants to use the hardware mode to control the slave NSS pin,
+*\*\        it must call the function SPI_SS_Output_Enable to set the SSOEN bit of the SPI_CTRL2 register.
+**/
+void SPI_NSS_Config(SPI_Module* SPIx, uint16_t NSS)
+{
+    /* Clear SPI_CTRL1 SSMEN bits */
+    SPIx->CTRL1 &= SPI_NSS_MASK;
+    /* Set SPI_CTRL1 SSMEN bits */
+    SPIx->CTRL1 |= NSS;
+}
+
+
+/**
 *\*\name    SPI_Set_Nss_Level.
-*\*\fun     Configures internally by software the NSS pin for the selected SPI.
+*\*\fun     Configure the level of NSS inside the SPI module.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -368,6 +390,8 @@ void SPI_FirstBit_Config(SPI_Module* SPIx, uint16_t FirstBit)
 *\*\          - SPI_NSS_HIGH
 *\*\          - SPI_NSS_LOW
 *\*\return  none
+*\*\note    Only meaningful when SPIx NSS works in software management mode.
+*\*\        The configuration is the internal NSS level of the SPI module, not the NSS pin level.
 **/
 void SPI_Set_Nss_Level(SPI_Module* SPIx, uint16_t SPI_NSS_Internal_Soft)
 {
@@ -385,11 +409,12 @@ void SPI_Set_Nss_Level(SPI_Module* SPIx, uint16_t SPI_NSS_Internal_Soft)
 
 /**
 *\*\name    SPI_SS_Output_Enable.
-*\*\fun     Enables the SS output for the selected SPI.
+*\*\fun     Enables the SS output in master mode.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\return  none
+*\*\note    The device cannot work in multi-master mode.
 **/
 void SPI_SS_Output_Enable(SPI_Module* SPIx)
 {
@@ -399,11 +424,12 @@ void SPI_SS_Output_Enable(SPI_Module* SPIx)
 
 /**
 *\*\name    SPI_SS_Output_Disable.
-*\*\fun     Disable the SS output for the selected SPI.
+*\*\fun     Disable SS output in master mode.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\return  none
+*\*\note    The device can work in multi-master mode.
 **/
 void SPI_SS_Output_Disable(SPI_Module* SPIx)
 {
@@ -412,8 +438,8 @@ void SPI_SS_Output_Disable(SPI_Module* SPIx)
 }
 
 /**
-*\*\name    SPI_Next_Transmit_Crc.
-*\*\fun     Transmit the SPIx CRC value.
+*\*\name    SPI_Next_Transmit_CRC.
+*\*\fun     The next data to be sent is the CRC value.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -426,7 +452,7 @@ void SPI_Next_Transmit_CRC(SPI_Module* SPIx)
 }
 
 /**
-*\*\name    SPI_Crc_ENABLE.
+*\*\name    SPI_CRC_Enable.
 *\*\fun     Enables the CRC value calculation of the transferred bytes.
 *\*\param   SPIx :
 *\*\          - SPI1
@@ -441,7 +467,7 @@ void SPI_CRC_Enable(SPI_Module* SPIx)
 }
 
 /**
-*\*\name    SPI_Crc_Disable.
+*\*\name    SPI_CRC_Disable.
 *\*\fun     Disable the CRC value calculation of the transferred bytes.
 *\*\param   SPIx :
 *\*\          - SPI1
@@ -458,11 +484,11 @@ void SPI_CRC_Disable(SPI_Module* SPIx)
 *\*\name    SPI_CRC_Data_Get.
 *\*\fun     Get SPI CRC data from SPI_CRCTDAT/SPI_CRCRDAT register.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2       
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   SPI_CRC :
-*\*\          - SPI_CRC_TX       
-*\*\          - SPI_CRC_RX        
+*\*\          - SPI_CRC_TX
+*\*\          - SPI_CRC_RX
 *\*\return  Tx/Rx CRC register value.
 **/
 uint16_t SPI_CRC_Data_Get(SPI_Module* SPIx, uint8_t SPI_CRC)
@@ -482,11 +508,11 @@ uint16_t SPI_CRC_Data_Get(SPI_Module* SPIx, uint8_t SPI_CRC)
 
 /**
 *\*\name    SPI_CRC_Polynomial_Set.
-*\*\fun     Set CRC Polynomial from SPI_CRC_POLY register.
+*\*\fun     Set CRC Polynomial to SPI_CRC_POLY register.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2  
-*\*\param   polynomial      max 0xffff           
+*\*\          - SPI1
+*\*\          - SPI2
+*\*\param   polynomial      max 0xffff
 *\*\return  none.
 **/
 void SPI_CRC_Polynomial_Set(SPI_Module* SPIx, uint16_t polynomial)
@@ -500,8 +526,8 @@ void SPI_CRC_Polynomial_Set(SPI_Module* SPIx, uint16_t polynomial)
 *\*\name    SPI_CRC_Polynomial_Get.
 *\*\fun     Get CRC Polynomial from SPI_CRC_POLY register.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2               
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\return  The CRC Polynomial register value.
 **/
 uint16_t SPI_CRC_Polynomial_Get(SPI_Module* SPIx)
@@ -513,7 +539,7 @@ uint16_t SPI_CRC_Polynomial_Get(SPI_Module* SPIx)
 
 /**
 *\*\name    SPI_I2S_Mode_Select.
-*\*\fun     Select working on SPI mode or I2S mode.
+*\*\fun     Select working on SPI or I2S mode.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -521,7 +547,7 @@ uint16_t SPI_CRC_Polynomial_Get(SPI_Module* SPIx)
 *\*\          - SEL_SPI_Mode
 *\*\          - SEL_I2S_Mode
 *\*\return  none
-*\*\note    Must be used with I2S or SPI OFF.
+*\*\note    Can only be used when SPI or I2S is turned off.
 **/
 void SPI_I2S_Mode_Select(SPI_Module* SPIx, uint16_t Mode)
 {
@@ -571,7 +597,7 @@ void I2S_OFF(SPI_Module* SPIx)
 *\*\          - DataFormat
 *\*\          - MCLKEnable
 *\*\          - AudioFrequency
-*\*\          - CLKPOL      
+*\*\          - CLKPOL
 *\*\return  none
 **/
 void I2S_Initializes_Structure(I2S_InitType* I2S_InitStruct)
@@ -605,37 +631,37 @@ void I2S_Initializes_Structure(I2S_InitType* I2S_InitStruct)
 *\*\          - SPI2
 *\*\param   I2S_InitType :
 *\*\          - I2sMode
-*\*\           - I2S_MODE_SlAVE_TX 
-*\*\           - I2S_MODE_SlAVE_RX 
+*\*\           - I2S_MODE_SlAVE_TX
+*\*\           - I2S_MODE_SlAVE_RX
 *\*\           - I2S_MODE_MASTER_TX
 *\*\           - I2S_MODE_MASTER_RX
 *\*\          - Standard
-*\*\           - I2S_STD_PHILLIPS      
-*\*\           - I2S_STD_MSB_ALIGN     
-*\*\           - I2S_STD_LSB_ALIGN     
+*\*\           - I2S_STD_PHILLIPS
+*\*\           - I2S_STD_MSB_ALIGN
+*\*\           - I2S_STD_LSB_ALIGN
 *\*\           - I2S_STD_PCM_SHORTFRAME
 *\*\           - I2S_STD_PCM_LONGFRAME 
 *\*\          - DataFormat
-*\*\           - I2S_DATA_FMT_16BITS          
-*\*\           - I2S_DATA_FMT_16BITS_EXTENDED 
-*\*\           - I2S_DATA_FMT_24BITS          
-*\*\           - I2S_DATA_FMT_32BITS          
+*\*\           - I2S_DATA_FMT_16BITS
+*\*\           - I2S_DATA_FMT_16BITS_EXTENDED
+*\*\           - I2S_DATA_FMT_24BITS
+*\*\           - I2S_DATA_FMT_32BITS
 *\*\          - MCLKEnable
-*\*\           - ENABLE 
-*\*\           - DISABLE
+*\*\           - I2S_MCLK_ENABLE
+*\*\           - I2S_MCLK_DISABLE
 *\*\          - AudioFrequency
-*\*\           - I2S_AUDIO_FREQ_192K   
-*\*\           - I2S_AUDIO_FREQ_96K    
-*\*\           - I2S_AUDIO_FREQ_48K    
-*\*\           - I2S_AUDIO_FREQ_44K    
-*\*\           - I2S_AUDIO_FREQ_32K    
-*\*\           - I2S_AUDIO_FREQ_22K    
-*\*\           - I2S_AUDIO_FREQ_16K    
-*\*\           - I2S_AUDIO_FREQ_11K    
-*\*\           - I2S_AUDIO_FREQ_8K     
+*\*\           - I2S_AUDIO_FREQ_192K
+*\*\           - I2S_AUDIO_FREQ_96K
+*\*\           - I2S_AUDIO_FREQ_48K
+*\*\           - I2S_AUDIO_FREQ_44K
+*\*\           - I2S_AUDIO_FREQ_32K
+*\*\           - I2S_AUDIO_FREQ_22K
+*\*\           - I2S_AUDIO_FREQ_16K
+*\*\           - I2S_AUDIO_FREQ_11K
+*\*\           - I2S_AUDIO_FREQ_8K
 *\*\           - I2S_AUDIO_FREQ_DEFAULT
 *\*\          - CLKPOL
-*\*\           - I2S_CLKPOL_LOW 
+*\*\           - I2S_CLKPOL_LOW
 *\*\           - I2S_CLKPOL_HIGH
 *\*\return  none
 **/
@@ -644,7 +670,7 @@ void I2S_Initializes(SPI_Module* SPIx, I2S_InitType* I2S_InitStruct)
     I2S_Mode_Config(SPIx, I2S_InitStruct->I2sMode);
     I2S_Standard_Config(SPIx, I2S_InitStruct->Standard);
     I2S_DataFormat_Config(SPIx, I2S_InitStruct->DataFormat);
-    if(I2S_InitStruct->MCLKEnable == ENABLE)
+    if(I2S_InitStruct->MCLKEnable == I2S_MCLK_ENABLE)
     {
         I2S_MCLK_Enable(SPIx);
     }
@@ -659,17 +685,17 @@ void I2S_Initializes(SPI_Module* SPIx, I2S_InitType* I2S_InitStruct)
 
 /**
 *\*\name    I2S_Mode_Config.
-*\*\fun     Config the I2s I2sMode.
+*\*\fun     Configure I2S working mode.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\param   I2sMode :
-*\*\          - I2S_MODE_SlAVE_TX 
-*\*\          - I2S_MODE_SlAVE_RX 
+*\*\          - I2S_MODE_SlAVE_TX
+*\*\          - I2S_MODE_SlAVE_RX
 *\*\          - I2S_MODE_MASTER_TX
 *\*\          - I2S_MODE_MASTER_RX
 *\*\return  none
-*\*\note    Must be used with I2S OFF.
+*\*\note    Must be used when I2S OFF.
 **/
 void I2S_Mode_Config(SPI_Module* SPIx, uint16_t I2sMode)
 {
@@ -682,16 +708,16 @@ void I2S_Mode_Config(SPI_Module* SPIx, uint16_t I2sMode)
 
 /**
 *\*\name    I2S_Standard_Config.
-*\*\fun     Config the I2s Standard.
+*\*\fun     Config the I2S Standard.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\param   I2sMode :
-*\*\          - I2S_STD_PHILLIPS      
-*\*\          - I2S_STD_MSB_ALIGN     
-*\*\          - I2S_STD_LSB_ALIGN     
+*\*\          - I2S_STD_PHILLIPS
+*\*\          - I2S_STD_MSB_ALIGN
+*\*\          - I2S_STD_LSB_ALIGN
 *\*\          - I2S_STD_PCM_SHORTFRAME
-*\*\          - I2S_STD_PCM_LONGFRAME 
+*\*\          - I2S_STD_PCM_LONGFRAME
 *\*\return  none
 **/
 void I2S_Standard_Config(SPI_Module* SPIx, uint16_t Standard)
@@ -705,15 +731,15 @@ void I2S_Standard_Config(SPI_Module* SPIx, uint16_t Standard)
 
 /**
 *\*\name    I2S_DataFormat_Config.
-*\*\fun     Config the I2s DataFormat.
+*\*\fun    Config the I2s data format.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\param   DataFormat :
-*\*\          - I2S_DATA_FMT_16BITS          
-*\*\          - I2S_DATA_FMT_16BITS_EXTENDED 
-*\*\          - I2S_DATA_FMT_24BITS          
-*\*\          - I2S_DATA_FMT_32BITS  
+*\*\          - I2S_DATA_FMT_16BITS
+*\*\          - I2S_DATA_FMT_16BITS_EXTENDED
+*\*\          - I2S_DATA_FMT_24BITS
+*\*\          - I2S_DATA_FMT_32BITS
 *\*\return  none
 **/
 void I2S_DataFormat_Config(SPI_Module* SPIx, uint16_t DataFormat)
@@ -727,11 +753,12 @@ void I2S_DataFormat_Config(SPI_Module* SPIx, uint16_t DataFormat)
 
 /**
 *\*\name    I2S_MCLK_Enable.
-*\*\fun     Enable the I2s MCLK.
+*\*\fun     Enable the Master clock output.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\return  none
+*\*\note    Can only be used when I2S is turned off and working in master mode.
 **/
 void I2S_MCLK_Enable(SPI_Module* SPIx)
 {
@@ -742,11 +769,10 @@ void I2S_MCLK_Enable(SPI_Module* SPIx)
 
 /**
 *\*\name    I2S_MCLK_Disable.
-*\*\fun     Disable the I2s MCLK.
+*\*\fun     Disable the Master clock output.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
-*\*\param   MCLKEnable :
 *\*\return  none
 **/
 void I2S_MCLK_Disable(SPI_Module* SPIx)
@@ -757,28 +783,29 @@ void I2S_MCLK_Disable(SPI_Module* SPIx)
 
 
 /**
-*\*\name    I2S_Config_MCLKEnable_And_AudioFrequency.
-*\*\fun     Config the I2s MCLKEnable and AudioFrequency.
+*\*\name    I2S_AudioFrequency_Config.
+*\*\fun     Configure I2S Audio Frequency.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
 *\*\param   AudioFrequency :
-*\*\          - I2S_AUDIO_FREQ_192K   
-*\*\          - I2S_AUDIO_FREQ_96K    
-*\*\          - I2S_AUDIO_FREQ_48K    
-*\*\          - I2S_AUDIO_FREQ_44K    
-*\*\          - I2S_AUDIO_FREQ_32K    
-*\*\          - I2S_AUDIO_FREQ_22K    
-*\*\          - I2S_AUDIO_FREQ_16K    
-*\*\          - I2S_AUDIO_FREQ_11K    
-*\*\          - I2S_AUDIO_FREQ_8K     
+*\*\          - I2S_AUDIO_FREQ_192K
+*\*\          - I2S_AUDIO_FREQ_96K
+*\*\          - I2S_AUDIO_FREQ_48K
+*\*\          - I2S_AUDIO_FREQ_44K
+*\*\          - I2S_AUDIO_FREQ_32K
+*\*\          - I2S_AUDIO_FREQ_22K
+*\*\          - I2S_AUDIO_FREQ_16K
+*\*\          - I2S_AUDIO_FREQ_11K
+*\*\          - I2S_AUDIO_FREQ_8K
 *\*\          - I2S_AUDIO_FREQ_DEFAULT
 *\*\return  none
+*\*\note    MCLK and data format must be configured before calling this function.
 **/
 void I2S_AudioFrequency_Config(SPI_Module* SPIx, uint32_t AudioFrequency)
 {
     uint16_t i2sdiv = 2, i2sodd = 0, packetlength = 1;
-    uint32_t tmp = 0;///
+    uint32_t tmp = 0;
     RCC_ClocksType RCC_Clocks;
     uint32_t sourceclock = 0;
 
@@ -848,7 +875,7 @@ void I2S_AudioFrequency_Config(SPI_Module* SPIx, uint32_t AudioFrequency)
 
 /**
 *\*\name    I2S_CLKPOL_Config.
-*\*\fun     Config the I2s CLKPOL.
+*\*\fun     Config the I2S clock polarity.
 *\*\param   SPIx :
 *\*\          - SPI1
 *\*\          - SPI2
@@ -868,10 +895,10 @@ void I2S_CLKPOL_Config(SPI_Module* SPIx, uint16_t CLKPOL)
 
 /**
 *\*\name    SPI_I2S_Interrupts_Enable.
-*\*\fun     Enable SPI interrupts.
+*\*\fun     Enable SPI or I2S interrupts.
 *\*\param   SPIx :
-*\*\          - SPI1    
-*\*\          - SPI2       
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   spi_interrupt :
 *\*\          - SPI_I2S_INT_TE    SPI_CTRL2
 *\*\          - SPI_I2S_INT_RNE   SPI_CTRL2
@@ -886,10 +913,10 @@ void SPI_I2S_Interrupts_Enable(SPI_Module* SPIx, uint8_t spi_interrupt)
 
 /**
 *\*\name    SPI_I2S_Interrupts_Disable.
-*\*\fun     Disable SPI interrupts.
+*\*\fun     Disable SPI or I2S interrupts.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2             
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   spi_interrupt :
 *\*\          - SPI_I2S_INT_TE    SPI_CTRL2
 *\*\          - SPI_I2S_INT_RNE   SPI_CTRL2
@@ -907,8 +934,8 @@ void SPI_I2S_Interrupts_Disable(SPI_Module* SPIx, uint8_t spi_interrupt)
 *\*\name    SPI_I2S_DMA_Transfer_Enable.
 *\*\fun     Enable SPI or I2S DMA transfer.
 *\*\param   SPIx :
-*\*\          - SPI1      
-*\*\          - SPI2           
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   SPI_I2S_DMARequest :
 *\*\          - SPI_I2S_DMA_TX
 *\*\          - SPI_I2S_DMA_RX
@@ -925,8 +952,8 @@ void SPI_I2S_DMA_Transfer_Enable(SPI_Module* SPIx, uint16_t SPI_I2S_DMARequest)
 *\*\name    SPI_I2S_DMA_Transfer_Disable.
 *\*\fun     Disable SPI or I2S DMA transfer.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2          
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   SPI_I2S_DMARequest :
 *\*\          - SPI_I2S_DMA_TX
 *\*\          - SPI_I2S_DMA_RX
@@ -943,8 +970,8 @@ void SPI_I2S_DMA_Transfer_Disable(SPI_Module* SPIx, uint16_t SPI_I2S_DMARequest)
 *\*\name    SPI_I2S_Data_Transmit.
 *\*\fun     Transmits a Data through the SPIx/I2Sx peripheral.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2             
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   Data           \* Data to be transmitted *\
 *\*\return  none
 **/
@@ -959,8 +986,8 @@ void SPI_I2S_Data_Transmit(SPI_Module* SPIx, uint16_t Data)
 *\*\name    SPI_I2S_Data_Get.
 *\*\fun     Get SPI/I2S data from SPI_DAT register.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2             
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\return  The data in the SPI_DAT register
 **/
 uint16_t SPI_I2S_Data_Get(SPI_Module* SPIx)
@@ -974,8 +1001,8 @@ uint16_t SPI_I2S_Data_Get(SPI_Module* SPIx)
 *\*\name    SPI_I2S_Flag_Status_Get.
 *\*\fun     Get SPI/I2S flag status.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2             
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   spi_i2s_flag :
 *\*\          - SPI_I2S_FLAG_TE
 *\*\          - SPI_I2S_FLAG_RNE
@@ -993,19 +1020,19 @@ FlagStatus SPI_I2S_Flag_Status_Get(SPI_Module* SPIx, uint8_t spi_i2s_flag)
 }
 
 /**
-*\*\name    SPI_I2S_Get_Flag_Status.
-*\*\fun     Get SPI/I2S flag status.
+*\*\name    SPI_I2S_Interrupt_Flag_Status_Get.
+*\*\fun     Get SPI/I2S Interrupt flag status.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2             
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   spi_i2s_flag :
-*\*\          - SPI_I2S_INT_FLAG_RNE 
-*\*\          - SPI_I2S_INT_FLAG_TE  
-*\*\          - I2S_INT_FLAG_UNDER   
-*\*\          - SPI_INT_FLAG_CRCERR  
-*\*\          - SPI_INT_FLAG_MODERR  
+*\*\          - SPI_I2S_INT_FLAG_RNE
+*\*\          - SPI_I2S_INT_FLAG_TE
+*\*\          - I2S_INT_FLAG_UNDER
+*\*\          - SPI_INT_FLAG_CRCERR
+*\*\          - SPI_INT_FLAG_MODERR
 *\*\          - SPI_I2S_INT_FLAG_OVER
-*\*\          - SPI_I2S_INT_FLAG_ERR 
+*\*\          - SPI_I2S_INT_FLAG_ERR
 *\*\return  SET or RESET
 **/
 
@@ -1052,16 +1079,25 @@ FlagStatus SPI_I2S_Interrupt_Flag_Status_Get(SPI_Module* SPIx, uint16_t spi_i2s_
 
 
 /**
-*\*\name    SPI_I2S_Get_Flag_Status.
-*\*\fun     Get SPI/I2S flag status.
+*\*\name    SPI_I2S_Clear_Flag_Status.
+*\*\fun     Clear SPI/I2S flag status.
 *\*\param   SPIx :
-*\*\          - SPI1       
-*\*\          - SPI2            
+*\*\          - SPI1
+*\*\          - SPI2
 *\*\param   spi_i2s_flag :
 *\*\          - SPI_I2S_FLAG_OVER
 *\*\          - SPI_FLAG_CRCERR
-*\*\          - I2S_FLAG_UNDER     
+*\*\          - I2S_FLAG_UNDER
 *\*\return  none
+*\*\note
+*\*\ - OVER (OverRun error) flag is cleared by software sequence: a read
+*\*\        operation to SPI_DAT register (SPI_I2S_Data_Get()) followed by a read
+*\*\        operation to SPI_STS register (SPI_I2S_Flag_Status_Get()).
+*\*\ - UNDER (UnderRun error) flag is cleared by a read operation to 
+*\*\        SPI_STS register (SPI_I2S_Flag_Status_Get()).
+*\*\ - MODERR (Mode error) flag is cleared by software sequence: a read/write
+*\*\       operation to SPI_STS register (SPI_I2S_Flag_Status_Get()) followed by a
+*\*\       write operation to SPI_CTRL1 register (SPI_ON() to enable the SPI).
 **/
 void SPI_I2S_Clear_Flag_Status(SPI_Module* SPIx, uint16_t spi_i2s_flag)
 {
@@ -1069,28 +1105,19 @@ void SPI_I2S_Clear_Flag_Status(SPI_Module* SPIx, uint16_t spi_i2s_flag)
     switch (spi_i2s_flag)
     {
       case SPI_FLAG_CRCERR:
+        /* Clear the selected SPI CRC Error (CRCERR) flag */
             SPIx->STS &= (uint16_t)(~spi_i2s_flag);
         break;
       case I2S_FLAG_UNDER:
            temp_vlue = SPIx->STS;
         break;
+      case SPI_I2S_FLAG_OVER:
+        /* read SPI_DAT and SPI_STS to Clear the Flag */
+           temp_vlue = SPIx->DAT;
+           temp_vlue = SPIx->STS;
+        break;  
       default:
         break;
-    }
-    if((spi_i2s_flag == SPI_FLAG_CRCERR) || (spi_i2s_flag == SPI_INT_FLAG_CRCERR))
-    {
-        /* Clear the selected SPI CRC Error (CRCERR) flag */
-        SPIx->STS &= (uint16_t)(~spi_i2s_flag);
-    }
-    else if((spi_i2s_flag == I2S_FLAG_UNDER) || (spi_i2s_flag == I2S_INT_FLAG_UNDER))
-    {
-      temp_vlue = SPIx->STS;
-    }
-    else
-    {
-        /* read SPI_DAT and SPI_STS to Clear the Flag*/
-        temp_vlue = SPIx->DAT;
-        temp_vlue = SPIx->STS;
     }
 }
 

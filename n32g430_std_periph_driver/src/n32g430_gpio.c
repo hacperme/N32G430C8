@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
  
 /**
 *\*\file n32g430_gpio.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.0.1
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/
 
 #include "n32g430_gpio.h"
@@ -107,7 +127,8 @@ void GPIOA_Pin_Reset(uint16_t pin)
         {
             if(position > GPIOA_MODE_POSITION)
             {
-                /* Configure IO Direction in alternate Mode */
+                /* Configure IO Direction in alternate Mode */  
+                GPIOA->PMODE &= ~(GPIO_PMODE_MASK << (position * MULTIPLIER_FACTOR_2));
                 GPIOA->PMODE |= (GPIO_AF_MODE << (position * MULTIPLIER_FACTOR_2));
             }
             else
@@ -133,11 +154,13 @@ void GPIOA_Pin_Reset(uint16_t pin)
             if(position == GPIOA_PUPD_POSITION1 || position == GPIOA_PUPD_POSITION2)
             {
                 /* Reset the GPIO pull mode to pull-up */
+                GPIOA->PUPD &= ~(GPIO_PUPD_MASK << (position * MULTIPLIER_FACTOR_2));  
                 GPIOA->PUPD |= (GPIO_PU_MODE << (position * MULTIPLIER_FACTOR_2));  
             }
             else if(position == GPIOA_PUPD_POSITION3)
             {
                 /* Reset the GPIO pull mode to pull-down */
+                GPIOA->PUPD &= ~(GPIO_PUPD_MASK << (position * MULTIPLIER_FACTOR_2));  
                 GPIOA->PUPD |= (GPIO_PD_MODE << (position * MULTIPLIER_FACTOR_2));  
             }
             else
@@ -150,6 +173,7 @@ void GPIOA_Pin_Reset(uint16_t pin)
             GPIOA->SR |= (GPIO_SR_SLOW << position);  
 
             /* Reset the GPIO driver strength to 8 mA */
+            GPIOA->DS &= ~(GPIO_DRIVER_MASK << (position * MULTIPLIER_FACTOR_2));  
             GPIOA->DS |= (GPIO_DRIVER_8MA << (position * MULTIPLIER_FACTOR_2));  
         }
         position++;
@@ -195,6 +219,7 @@ void GPIOB_Pin_Reset(uint16_t pin)
             if((position == GPIOB_MODE_POSITION1) || (position == GPIOB_MODE_POSITION2))
             {
                 /* Configure IO Direction in alternate Mode */
+                GPIOB->PMODE &= ~(GPIO_PMODE_MASK << (position * MULTIPLIER_FACTOR_2));
                 GPIOB->PMODE |= (GPIO_AF_MODE << (position * MULTIPLIER_FACTOR_2));
             }
             else
@@ -219,6 +244,7 @@ void GPIOB_Pin_Reset(uint16_t pin)
             if(position == GPIOB_PUPD_POSITION1)
             {
                 /* Reset the GPIO pull mode to pull-up */
+                GPIOB->PUPD &= ~(GPIO_PUPD_MASK << (position * MULTIPLIER_FACTOR_2)); 
                 GPIOB->PUPD |= (GPIO_PU_MODE << (position * MULTIPLIER_FACTOR_2));  
             }
             else
@@ -231,6 +257,7 @@ void GPIOB_Pin_Reset(uint16_t pin)
             GPIOB->SR |= (GPIO_SR_SLOW << position);  
 
             /* Reset the GPIO driver strength to 8 mA */
+            GPIOB->DS &= ~(GPIO_DRIVER_MASK << (position * MULTIPLIER_FACTOR_2));  
             GPIOB->DS |= (GPIO_DRIVER_8MA << (position * MULTIPLIER_FACTOR_2));  
         }
         position++;
@@ -275,6 +302,7 @@ void GPIOC_Pin_Reset(uint16_t pin)
             GPIOC->SR |= (GPIO_SR_SLOW << position);  
 
             /* Reset the GPIO driver strength to 8 mA */
+            GPIOC->DS &= ~(GPIO_DRIVER_MASK << (position * MULTIPLIER_FACTOR_2)); 
             GPIOC->DS |= (GPIO_DRIVER_8MA << (position * MULTIPLIER_FACTOR_2));  
         }
         position++;
@@ -308,7 +336,8 @@ void GPIOD_Pin_Reset(uint16_t pin)
         {
             if(position == GPIOD_MODE_POSITION)
             {
-                /* Configure IO Direction in analog Mode */
+                /* Configure IO Direction in input Mode */
+                GPIOD->PMODE &= ~(GPIO_PMODE_MASK << (position * MULTIPLIER_FACTOR_2));
                 GPIOD->PMODE |= (GPIO_INPUT_MODE << (position * MULTIPLIER_FACTOR_2));
             }
             else
@@ -333,6 +362,7 @@ void GPIOD_Pin_Reset(uint16_t pin)
             if(position == GPIOD_PUPD_POSITION1)
             {
                 /* Reset the GPIO pull mode to pull-down */
+                GPIOD->PUPD &= ~(GPIO_PUPD_MASK << (position * MULTIPLIER_FACTOR_2));  
                 GPIOD->PUPD |= (GPIO_PD_MODE << (position * MULTIPLIER_FACTOR_2));  
             }
             else if(position >= GPIOD_PUPD_POSITION2)
@@ -345,6 +375,7 @@ void GPIOD_Pin_Reset(uint16_t pin)
             GPIOD->SR |= (GPIO_SR_SLOW << position);  
 
             /* Reset the GPIO driver strength to 8 mA */
+            GPIOD->DS &= ~(GPIO_DRIVER_MASK << (position * MULTIPLIER_FACTOR_2)); 
             GPIOD->DS |= (GPIO_DRIVER_8MA << (position * MULTIPLIER_FACTOR_2)); 
         }
         position++;
@@ -997,8 +1028,8 @@ void GPIO_Pin_Toggle(GPIO_Module* GPIOx, uint16_t pin)
 void GPIO_Pin_Lock_Set(GPIO_Module* GPIOx, uint16_t pin)
 {
     uint32_t temp_value = 0x00U;
-	
-	temp_value = (GPIO_PLOCKK_MASK | pin);
+
+    temp_value = (GPIO_PLOCKK_MASK | pin);
 
     /* PLOCKK and PLOCKx write 1 */
     GPIOx->PLOCK = temp_value;

@@ -1,72 +1,76 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430_adc.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.1.0
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/
 
 #include "n32g430_adc.h"
 #include "n32g430_rcc.h"
 
 /** ADC Private Defines**/
+#define  ADC_LDO_CTR    (*(uint32_t*)(0x40020800 + 0x60))
+
 
 /** API interface function definition**/
 uint32_t vrefint_value; 
-typedef enum
-{
-    CMD_CR_SUCCESS  = 0x00,
-    CMD_CR_FAILED   = 0x01,
-}CMD_RETURN_CR;
-
-CMD_RETURN_CR (*Program_NVR)(uint32_t addr, uint32_t  data) = (CMD_RETURN_CR (*)(uint32_t ,uint32_t ))0x1FFF01D1;
-CMD_RETURN_CR     (*Get_NVR)(uint32_t addr, uint32_t* data) = (CMD_RETURN_CR (*)(uint32_t ,uint32_t*))0x1FFF02A5;
 
 /**
 *\*\name    ADC_Vrefint_Get.
-*\*\fun     Return the Verfint value of NVR.
-*\*\param   vrefint_value
+*\*\fun     Return the Vrefint value of NVR.
 *\*\return  vrefint_value
 **/
 uint32_t ADC_Vrefint_Get(void)
 {
-  Get_NVR(0x1FFFF620, &vrefint_value);
-	if(vrefint_value == 0xFFFFFFFF)
-	{
-		Get_NVR(0x1FFFF268, &vrefint_value);
-		return vrefint_value;
-	}
-	else
-	{
-	    return vrefint_value;
-	}
-
+    Get_NVR_Value(0x1FFFF268, &vrefint_value);
+    return vrefint_value;
 }
 
 /** ADC Driving Functions Declaration**/
@@ -257,6 +261,9 @@ void ADC_Initializes(ADC_InitType* ADC_initstruct)
     {
         ADC_Continue_Conversion_Disable();
     }
+
+    /* Enable external LDO */
+    ADC_LDO_CTR |= 0x00000028;
 
     ADC_Regular_Group_External_Trigger_Source_Config(ADC_initstruct->ExtTrigSelect);
     ADC_Data_Alignment_Config(ADC_initstruct->DatAlign);
@@ -1083,7 +1090,7 @@ FlagStatus ADC_Flag_Status_Get(uint8_t selflag, uint8_t adc_runflag, uint8_t adc
 *\*\          - ADC_INT_FLAG_JENDC
 *\*\          - ADC_INT_FLAG_ENDCA
 *\*\          - ADC_INT_FLAG_JENDCA
-*\*\return  SET or RESET
+*\*\return  none
 **/
 void ADC_INTFlag_Status_Clear(uint8_t adc_flag)
 {
@@ -1102,7 +1109,7 @@ void ADC_INTFlag_Status_Clear(uint8_t adc_flag)
 *\*\          - ADC_FLAG_STR
 *\*\          - ADC_FLAG_ENDCA
 *\*\          - ADC_FLAG_JENDCA
-*\*\return  SET or RESET
+*\*\return  none
 **/
 void ADC_Flag_Status_Clear(uint8_t adc_flag)
 {
@@ -1435,7 +1442,7 @@ void ADC_Differential_Channels_Config(uint32_t difchs)
 *\*\          - RCC_ADCPLLCLK_DIV64 
 *\*\          - RCC_ADCPLLCLK_DIV128 
 *\*\          - RCC_ADCPLLCLK_DIV256 
-*\*\
+*\*\return  none
 **/
 void ADC_Clock_Mode_Config(ADC_CKMOD ADC_clkmode, uint32_t RCC_ADCHCLKprescaler)
 {

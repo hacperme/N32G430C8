@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430_tim.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.0.1
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/
 #include "n32g430_tim.h"
 #include "n32g430_rcc.h"
@@ -170,7 +190,7 @@ void TIM_Asymmetric_Disable(TIM_Module* TIMx)
 *\*\          - TIM5
 *\*\          - TIM6
 *\*\          - TIM8
-*\*\param   auto_reload：
+*\*\param   auto_reload:
               - [1, 0xffff]
 *\*\return  none
 **/
@@ -1335,7 +1355,7 @@ uint16_t TIM_Compare_Capture9_Get(TIM_Module* TIMx)
 /**
 *\*\name    TIM_Compare_Capture1_D_Get
 *\*\fun     Gets the CCDDAT1[16:31] in TIMx_CCDAT1 register
-*\*\param   TIMx：
+*\*\param   TIMx:
 *\*\          - TIM1
 *\*\return  uint16_t:
 *\*\          - [0 , 0xffff]         
@@ -1349,7 +1369,7 @@ uint16_t TIM_Compare_Capture1_D_Get(TIM_Module* TIMx)
 /**
 *\*\name    TIM_Compare_Capture2_D_Get
 *\*\fun     Gets the CCDDAT2[16:31] in TIMx_CCDAT2 register
-*\*\param   TIMx：
+*\*\param   TIMx:
 *\*\          - TIM1
 *\*\return  uint16_t:
 *\*\          - [0 , 0xffff]         
@@ -1363,7 +1383,7 @@ uint16_t TIM_Compare_Capture2_D_Get(TIM_Module* TIMx)
 /**
 *\*\name    TIM_Compare_Capture3_D_Get
 *\*\fun     Gets the CCDDAT3[16:31] in TIMx_CCDAT3 register
-*\*\param   TIMx：
+*\*\param   TIMx:
 *\*\          - TIM1
 *\*\return  uint16_t:
 *\*\          - [0 , 0xffff]         
@@ -1377,7 +1397,7 @@ uint16_t TIM_Compare_Capture3_D_Get(TIM_Module* TIMx)
 /**
 *\*\name    TIM_Compare_Capture4_D_Get
 *\*\fun     Gets the CCDDAT4[16:31] in TIMx_CCDAT4 register
-*\*\param   TIMx：
+*\*\param   TIMx:
 *\*\          - TIM1
 *\*\return  uint16_t:
 *\*\          - [0 , 0xffff]         
@@ -2096,7 +2116,7 @@ void TIM_Master_Slave_Mode_Set(TIM_Module* TIMx, uint16_t TIM_master_slave_mode)
 *\*\          - TIM_TRGO_SRC_OC2REF          OC2REF signal is used as the trigger output (TRGO).
 *\*\          - TIM_TRGO_SRC_OC3REF          OC3REF signal is used as the trigger output (TRGO).
 *\*\          - TIM_TRGO_SRC_OC4REF          OC4REF signal is used as the trigger output (TRGO).
-*\*\          For TIM1：
+*\*\          For TIM1:
 *\*\          - TIM_TRGO_SRC_OC4_7_8_9REF    OC4REF signal is used as the trigger output (TRGO).
 *\*\return  none
 **/
@@ -2533,7 +2553,7 @@ void TIM_Capture_Compare_Ch_N_Disable(TIM_Module* TIMx, uint16_t channel)
 *\*\return:
 *\*\          - SET
 *\*\          - RESET
-*\*\note：
+*\*\note:
 *\*\          - TIM_CC1NEN TIM_CC2NEN TIM_CC3NEN is used only with TIM1, TIM8.
 *\*\          - TIM_CC4NEN is used only with TIM1.
 **/
@@ -3121,7 +3141,7 @@ void TIM_Output_Channel1_Initialize(TIM_Module* TIMx, OCInitType* TIM_OCInitStru
     uint16_t temp_value1 = 0;
     uint32_t temp_value2 = 0;
 
-    /* Disable the Channel 1， Reset the CC1EN Bit */
+    /* Disable the Channel 1, Reset the CC1EN Bit */
     TIM_Capture_Compare_Ch_Disable(TIMx, TIM_CH_1);
 
     /* Get the TIMx CTRL2 register value */
@@ -3203,7 +3223,7 @@ void TIM_Output_Channel2_Initialize(TIM_Module* TIMx, OCInitType* TIM_OCInitStru
     uint16_t temp_value1 = 0;
     uint32_t temp_value2 = 0;
 
-    /* Disable the Channel 2， Reset the CC2EN Bit */
+    /* Disable the Channel 2, Reset the CC2EN Bit */
     TIM_Capture_Compare_Ch_Disable(TIMx, TIM_CH_2);
 
     /* Get the TIMx CTRL2 register value */
@@ -3285,7 +3305,7 @@ void TIM_Output_Channel3_Initialize(TIM_Module* TIMx, OCInitType* TIM_OCInitStru
     uint16_t temp_value1 = 0;
     uint32_t temp_value2 = 0;
 
-    /* Disable the Channel 3， Reset the CC3EN Bit */
+    /* Disable the Channel 3, Reset the CC3EN Bit */
     TIM_Capture_Compare_Ch_Disable(TIMx, TIM_CH_3);
 
     /* Get the TIMx CTRL2 register value */
@@ -3365,7 +3385,7 @@ void TIM_Output_Channel4_Initialize(TIM_Module* TIMx, OCInitType* TIM_OCInitStru
     uint16_t temp_value1 = 0;
     uint32_t temp_value2 = 0;
 
-    /* Disable the Channel 4， Reset the CC4EN Bit */
+    /* Disable the Channel 4, Reset the CC4EN Bit */
     TIM_Capture_Compare_Ch_Disable(TIMx, TIM_CH_4);
 
     /* Get the TIMx CTRL2 register value */
@@ -3452,7 +3472,7 @@ void TIM_Output_Channel5_Initialize(TIM_Module* TIMx, OCInitType* TIM_OCInitStru
     uint16_t temp_value1 = 0;
     uint32_t temp_value2 = 0;
 
-    /* Disable the Channel 5， Reset the CC5EN Bit */
+    /* Disable the Channel 5, Reset the CC5EN Bit */
     TIM_Capture_Compare_Ch_Disable(TIMx, TIM_CH_5);
 
     /* Get the TIMx CTRL2 register value */
@@ -3513,7 +3533,7 @@ void TIM_Output_Channel6_Initialize(TIM_Module* TIMx, OCInitType* TIM_OCInitStru
     uint16_t temp_value1 = 0;
     uint32_t temp_value2 = 0;
 
-    /* Disable the Channel 6， Reset the CC6EN Bit */
+    /* Disable the Channel 6, Reset the CC6EN Bit */
     TIM_Capture_Compare_Ch_Disable(TIMx, TIM_CH_6);
 
     /* Get the TIMx CTRL2 register value */
@@ -3979,19 +3999,6 @@ void TIM_Flag_Clear(TIM_Module* TIMx, uint32_t TIM_FLAG)
 *\*\         - TIM_DMABASE_CAPCMPDAT4
 *\*\         - TIM_DMABASE_BKDT
 *\*\         - TIM_DMABASE_DMACTRL
-*\*\         - TIM_DMABASE_DMAADDR
-*\*\         - TIM_DMABASE_CAPCMPMOD3
-*\*\         - TIM_DMABASE_CAPCMPDAT5
-*\*\         - TIM_DMABASE_CAPCMPDAT6
-*\*\         - TIM_DMABASE_CAPCMPDAT7
-*\*\         - TIM_DMABASE_CAPCMPDAT8
-*\*\         - TIM_DMABASE_CAPCMPDAT9
-*\*\         - TIM_DMABASE_BRKFILT
-*\*\         - TIM_DMABASE_C1FLIT
-*\*\         - TIM_DMABASE_C2FLIT
-*\*\         - TIM_DMABASE_C3FLIT
-*\*\         - TIM_DMABASE_C4FLIT
-*\*\         - TIM_DMABASE_FILTO
 *\*\param   TIM_DMABurstLength:
 *\*\         - TIM_DMABURST_LENGTH_1TRANSFER
 *\*\         - TIM_DMABURST_LENGTH_2TRANSFERS
@@ -4011,20 +4018,6 @@ void TIM_Flag_Clear(TIM_Module* TIMx, uint32_t TIM_FLAG)
 *\*\         - TIM_DMABURST_LENGTH_16TRANSFERS
 *\*\         - TIM_DMABURST_LENGTH_17TRANSFERS
 *\*\         - TIM_DMABURST_LENGTH_18TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_19TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_20TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_21TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_22TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_23TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_24TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_25TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_26TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_27TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_28TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_29TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_30TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_31TRANSFERS
-*\*\         - TIM_DMABURST_LENGTH_32TRANSFERS
 *\*\return  none
 **/
 void TIM_Dma_Config(TIM_Module* TIMx, uint16_t TIM_DMA_base, uint16_t TIM_DMA_burst_length)

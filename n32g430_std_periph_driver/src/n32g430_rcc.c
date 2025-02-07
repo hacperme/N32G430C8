@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430_rcc.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved. 
+*\*\version v1.0.2
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved. 
 **/
 #include "n32g430_rcc.h"
 
@@ -68,15 +88,12 @@ void RCC_Reset(void)
     /* Reset CFG2 register */
     RCC->CFG2 = RCC_CFG2_ADC1MPRES_DIV8;
 
-    /* Reset CFG3 register */
-    RCC->CFG3 = RCC_REG_BIT_MASK;
-
     /* Reset PLLHSIPRE register */
-    RCC->PLLHSIPRE = RCC_REG_BIT_MASK;
+    RCC->PLLHSIPRE |= RCC_PLLHSIPRE_PLLHSIPRE;
 
     /* Disable all interrupts and clear pending bits  */
     RCC->CLKINT = (RCC_CLKINT_LSIRDICLR|RCC_CLKINT_LSERDICLR|RCC_CLKINT_HSIRDICLR
-                  |RCC_CLKINT_HSERDICLR|RCC_CLKINT_PLLRDICLR|RCC_CLKINT_BORICLR
+                  |RCC_CLKINT_HSERDICLR|RCC_CLKINT_PLLRDICLR
                   |RCC_CLKINT_CLKSSICLR|RCC_CLKINT_LSESSICLR);
 }
 
@@ -129,11 +146,11 @@ ErrorStatus RCC_HSE_Stable_Wait(void)
     __IO uint32_t counter_value = 0;
     uint32_t timeout_value = 0;  
     FlagStatus status_value     = RESET;
-	RCC_ClocksType sysclk_value;
+    RCC_ClocksType sysclk_value;
 
-	RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
-	timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
-	
+    RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
+    timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
+
     /* Wait till HSE is ready and if Time out is reached exit */
     do
     {
@@ -228,10 +245,10 @@ ErrorStatus RCC_HSI_Stable_Wait(void)
     __IO uint32_t counter_value = 0;
     uint32_t timeout_value = 0;  
     FlagStatus status_value     = RESET;
-	RCC_ClocksType sysclk_value;
+    RCC_ClocksType sysclk_value;
 
-	RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
-	timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
+    RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
+    timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
 
     /* Wait till HSI is ready and if Time out is reached exit */
     do
@@ -254,44 +271,45 @@ ErrorStatus RCC_HSI_Stable_Wait(void)
 *\*\name    RCC_PLL_Config.
 *\*\fun     Configures the PLL clock source and multiplication factor.
 *\*\param   PLL_source(PLL entry clock source):
-*\*\   		  - RCC_PLL_SRC_HSI_DIV1    HSI oscillator clock selected as PLL clock entry
-*\*\   		  - RCC_PLL_SRC_HSI_DIV2    HSI oscillator clock divided by 2 selected as PLL clock entry
-*\*\  	      - RCC_PLL_SRC_HSE_DIV1    HSE oscillator clock selected as PLL clock entry
-*\*\ 	      - RCC_PLL_SRC_HSE_DIV2    HSE oscillator clock divided by 2 selected as PLL clock entry
+*\*\          - RCC_PLL_SRC_HSI_DIV1    HSI oscillator clock selected as PLL clock entry
+*\*\          - RCC_PLL_SRC_HSI_DIV2    HSI oscillator clock divided by 2 selected as PLL clock entry
+*\*\          - RCC_PLL_SRC_HSE_DIV1    HSE oscillator clock selected as PLL clock entry
+*\*\          - RCC_PLL_SRC_HSE_DIV2    HSE oscillator clock divided by 2 selected as PLL clock entry
 *\*\param   PLL_multiplication(PLL multiplication factor):
-*\*\	      - RCC_PLL_MUL_2 
-*\*\	      - RCC_PLL_MUL_3  
-*\*\	      - RCC_PLL_MUL_4  
-*\*\	      - RCC_PLL_MUL_5  
-*\*\	      - RCC_PLL_MUL_6  
-*\*\	      - RCC_PLL_MUL_7  
-*\*\	      - RCC_PLL_MUL_8  
-*\*\	      - RCC_PLL_MUL_9  
-*\*\	      - RCC_PLL_MUL_10 
-*\*\	      - RCC_PLL_MUL_11 
-*\*\	      - RCC_PLL_MUL_12 
-*\*\	      - RCC_PLL_MUL_13 
-*\*\	      - RCC_PLL_MUL_14 
-*\*\	      - RCC_PLL_MUL_15
-*\*\	      - RCC_PLL_MUL_16
-*\*\	      - RCC_PLL_MUL_17
-*\*\	      - RCC_PLL_MUL_18
-*\*\	      - RCC_PLL_MUL_19
-*\*\	      - RCC_PLL_MUL_20
-*\*\	      - RCC_PLL_MUL_21
-*\*\	      - RCC_PLL_MUL_22
-*\*\	      - RCC_PLL_MUL_23
-*\*\	      - RCC_PLL_MUL_24
-*\*\	      - RCC_PLL_MUL_25
-*\*\	      - RCC_PLL_MUL_26
-*\*\	      - RCC_PLL_MUL_27
-*\*\	      - RCC_PLL_MUL_28
-*\*\	      - RCC_PLL_MUL_29
-*\*\	      - RCC_PLL_MUL_30
-*\*\	      - RCC_PLL_MUL_31
-*\*\	      - RCC_PLL_MUL_32 
+*\*\          - RCC_PLL_MUL_2 
+*\*\          - RCC_PLL_MUL_3  
+*\*\          - RCC_PLL_MUL_4  
+*\*\          - RCC_PLL_MUL_5  
+*\*\          - RCC_PLL_MUL_6  
+*\*\          - RCC_PLL_MUL_7  
+*\*\          - RCC_PLL_MUL_8  
+*\*\          - RCC_PLL_MUL_9  
+*\*\          - RCC_PLL_MUL_10 
+*\*\          - RCC_PLL_MUL_11 
+*\*\          - RCC_PLL_MUL_12 
+*\*\          - RCC_PLL_MUL_13 
+*\*\          - RCC_PLL_MUL_14 
+*\*\          - RCC_PLL_MUL_15
+*\*\          - RCC_PLL_MUL_16
+*\*\          - RCC_PLL_MUL_17
+*\*\          - RCC_PLL_MUL_18
+*\*\          - RCC_PLL_MUL_19
+*\*\          - RCC_PLL_MUL_20
+*\*\          - RCC_PLL_MUL_21
+*\*\          - RCC_PLL_MUL_22
+*\*\          - RCC_PLL_MUL_23
+*\*\          - RCC_PLL_MUL_24
+*\*\          - RCC_PLL_MUL_25
+*\*\          - RCC_PLL_MUL_26
+*\*\          - RCC_PLL_MUL_27
+*\*\          - RCC_PLL_MUL_28
+*\*\          - RCC_PLL_MUL_29
+*\*\          - RCC_PLL_MUL_30
+*\*\          - RCC_PLL_MUL_31
+*\*\          - RCC_PLL_MUL_32 
 *\*\return  none
 *\*\note    This function must be used only when the PLL is disabled.
+*\*\note    PLL frequency must be greater than or equal to 32MHz.
 **/
 void RCC_PLL_Config(uint32_t PLL_source, uint32_t PLL_multiplication)
 {
@@ -345,9 +363,9 @@ void RCC_PLL_Disable(void)
 *\*\name    RCC_Sysclk_Config.
 *\*\fun     Configures the system clock (SYSCLK).
 *\*\param   sysclk_source(clock source used as system clock):
-*\*\	     - RCC_SYSCLK_SRC_HSI       HSI selected as system clock
-*\*\	     - RCC_SYSCLK_SRC_HSE       HSE selected as system clock
-*\*\	     - RCC_SYSCLK_SRC_PLLCLK    PLL selected as system clock
+*\*\         - RCC_SYSCLK_SRC_HSI       HSI selected as system clock
+*\*\         - RCC_SYSCLK_SRC_HSE       HSE selected as system clock
+*\*\         - RCC_SYSCLK_SRC_PLLCLK    PLL selected as system clock
 *\*\return  none
 **/
 void RCC_Sysclk_Config(uint32_t sysclk_source)
@@ -459,7 +477,6 @@ void RCC_Pclk2_Config(uint32_t hclk_div)
 *\*\         - RCC_INT_HSIRDIEN    HSI ready interrupt
 *\*\         - RCC_INT_HSERDIEN    HSE ready interrupt
 *\*\         - RCC_INT_PLLRDIEN    PLL ready interrupt
-*\*\         - RCC_INT_BORIEN      BOR  interrupt
 *\*\         - RCC_INT_LSESSIEN (Clock security system interrupt in LSE
 *\*\return  none
 **/
@@ -478,7 +495,6 @@ void RCC_Interrupt_Enable(uint32_t interrupt)
 *\*\         - RCC_INT_HSIRDIEN    HSI ready interrupt
 *\*\         - RCC_INT_HSERDIEN    HSE ready interrupt
 *\*\         - RCC_INT_PLLRDIEN    PLL ready interrupt
-*\*\         - RCC_INT_BORIEN      BOR  interrupt
 *\*\         - RCC_INT_LSESSIEN    Clock security system interrupt in LSE
 *\*\return  none
 **/
@@ -668,39 +684,62 @@ void RCC_ADC_Hclk_Disable(void)
 }
 
 /**
+*\*\name  RCC_LSE_Trim_Config.
+*\*\fun  Configures the External Low Speed oscillator (LSE) Trim.
+*\*\param   LSE_Trim(LSE Driver Trim Level):
+*\*\         - 0x00~0x1FF    
+*\*\return  none
+**/
+void RCC_LSE_Trim_Config(uint16_t LSE_Trim)
+{
+    uint32_t temp_value = 0;
+
+    temp_value = *(__IO uint32_t*)LSE_TRIMR_ADDR;
+    /*clear lse trim[8:0]*/
+    temp_value &= (~(LSE_GM_MASK_VALUE));
+    /*Check and set trim value */
+    (LSE_Trim>LSE_GM_MAX_VALUE) ? (LSE_Trim = LSE_GM_MAX_VALUE):(LSE_Trim &= LSE_GM_MASK_VALUE);
+    /*Set PWR_CR4 bit15 and bit[8:0] */
+    temp_value |= (LSE_NIM_MASK_VALUE|LSE_Trim);
+    /* Store the new value */
+    *(__IO uint32_t*)LSE_TRIMR_ADDR = temp_value;
+}
+
+/**
 *\*\name    RCC_LSE_Config.
 *\*\fun     Configures the External Low Speed oscillator (LSE).
 *\*\param   RCC_LSE(the new state of the LSE):
 *\*\         - RCC_LSE_DISABLE    LSE oscillator OFF
 *\*\         - RCC_LSE_ENABLE     LSE oscillator ON
 *\*\         - RCC_LSE_BYPASS     LSE oscillator bypassed with external clock
+*\*\param   LSE_Trim(LSE Driver Trim Level):
+*\*\         - 0x00~0x1FF(recommended value:0x1D7)    
 *\*\return  none
 **/
-void RCC_LSE_Config(uint8_t RCC_LSE)
+void RCC_LSE_Config(uint32_t RCC_LSE,uint16_t LSE_Trim)
 {
-    /* Reset LSEON and LSEBYP bits before configuring the LSE */
-    /* Reset LSEON bit */
-    *(__IO uint8_t*)RCC_BDCTRL_ADDR = RCC_LSE_DISABLE;
-    /* Reset LSEBYP bit */
-    *(__IO uint8_t*)RCC_BDCTRL_ADDR = RCC_LSE_DISABLE;
+    /* Enable PWR Clock */
+    RCC_APB1_Peripheral_Clock_Enable(RCC_APB1_PERIPH_PWR);
+    /* PWR DBKP set 1 */
+    PWR->CTRL |=  PWR_CTRL_DBKP;
+    
+    /* Reset LSEEN LSEBP bits before configuring the LSE */
+    *(__IO uint32_t*)RCC_BDCTRL_ADDR &= (~(RCC_LSE_ENABLE | RCC_LSE_BYPASS));
     /* Configure LSE (RCC_LSE_DISABLE is already covered by the code section above) */
-     if(RCC_LSE == RCC_LSE_ENABLE)
+    switch (RCC_LSE)
     {
-        /* Set LSEON bit */
-        *(__IO uint8_t*)RCC_BDCTRL_ADDR = RCC_LSE_ENABLE;
-       
+        case RCC_LSE_ENABLE:
+            /* Set LSEON bit */
+            *(__IO uint32_t*)RCC_BDCTRL_ADDR |= RCC_LSE_ENABLE;
+            RCC_LSE_Trim_Config(LSE_Trim);
+            break;
+        case RCC_LSE_BYPASS:
+            /* Set LSEBYP and LSEON bits */
+            *(__IO uint32_t*)RCC_BDCTRL_ADDR |= (RCC_LSE_BYPASS | RCC_LSE_ENABLE);
+            break;
+        default:
+            break;
     }
-    else if (RCC_LSE == RCC_LSE_BYPASS)
-    {
-        /* Set LSEBYP and LSEON bits */
-        *(__IO uint8_t*)RCC_BDCTRL_ADDR = RCC_LSE_BYPASS | RCC_LSE_ENABLE;
-    }
-    else
-    {
-        /* No process */
-    }
-      
-
 }
 
 /**
@@ -729,7 +768,7 @@ void RCC_LSE_Clock_Security_System_Disable(void)
 *\*\name    RCC_LSE_Clock_Security_System_Status_Get.
 *\*\fun     Get LSE Clock Security System failure status.
 *\*\param   none
-*\*\return  FlagStatus ：SET or RESET
+*\*\return  FlagStatus: SET or RESET
 **/
 FlagStatus RCC_LSE_Clock_Security_System_Status_Get(void)
 {
@@ -758,10 +797,10 @@ ErrorStatus RCC_LSE_Stable_Wait(void)
     __IO uint32_t counter_value = 0;
     uint32_t timeout_value = 0;   
     FlagStatus status_value     = RESET;
-	RCC_ClocksType sysclk_value;
+    RCC_ClocksType sysclk_value;
 
-	RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
-	timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
+    RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
+    timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
 
     /* Wait till LSE is ready and if Time out is reached exit */
     do
@@ -816,10 +855,10 @@ ErrorStatus RCC_LSI_Stable_Wait(void)
     __IO uint32_t counter_value = 0;
     uint32_t timeout_value = 0;   
     FlagStatus status_value     = RESET;
-	RCC_ClocksType sysclk_value;
+    RCC_ClocksType sysclk_value;
 
-	RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
-	timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
+    RCC_Clocks_Frequencies_Value_Get(&sysclk_value);
+    timeout_value = (HSE_STARTUP_TIMEOUT/((uint32_t)SYSCLK_FREQ_128M/sysclk_value.SysclkFreq));
 
     /* Wait till LSI is ready and if Time out is reached exit */
     do
@@ -1110,7 +1149,7 @@ void RCC_APB2_Peripheral_Clock_Enable(uint32_t APB2_periph)
 /**
 *\*\name    RCC_APB2_Peripheral_Clock_Disable.
 *\*\fun     Disables the High Speed APB (APB2) peripheral clock.
-*\*\param   APB2_periph (APB2 peripheral to gates its clock)：
+*\*\param   APB2_periph (APB2 peripheral to gates its clock):
 *\*\        - RCC_APB2_PERIPH_AFIO   
 *\*\        - RCC_APB2_PERIPH_BEEPER 
 *\*\        - RCC_APB2_PERIPH_TIM1   
@@ -1154,7 +1193,7 @@ void RCC_APB1_Peripheral_Clock_Enable(uint32_t APB1_periph)
 /**
 *\*\name    RCC_APB1_Peripheral_Clock_Disable.
 *\*\fun     Disables the High Speed APB (APB1) peripheral clock.
-*\*\param   APB1_periph (APB1 peripheral to gates its clock)：
+*\*\param   APB1_periph (APB1 peripheral to gates its clock):
 *\*\        - RCC_APB1_PERIPH_TIM2       
 *\*\        - RCC_APB1_PERIPH_TIM3       
 *\*\        - RCC_APB1_PERIPH_TIM4       
@@ -1238,28 +1277,6 @@ void RCC_APB1_Peripheral_Reset(uint32_t APB1_periph)
 }
 
 /**
-*\*\name    RCC_BOR_Reset_Enable.
-*\*\fun     BOR reset enable.
-*\*\param   none  
-*\*\return  none. 
-**/
-void RCC_BOR_Reset_Enable(void)
-{
-    RCC->CFG3 |= RCC_BOR_RST_ENABLE;
-}
-
-/**
-*\*\name    RCC_BOR_Reset_Disable.
-*\*\fun     BOR reset disable.
-*\*\param   none  
-*\*\return  none. 
-**/
-void RCC_BOR_Reset_Disable(void)
-{
-    RCC->CFG3 &= ~RCC_BOR_RST_ENABLE;
-}
-
-/**
 *\*\name    RCC_Backup_Reset.
 *\*\fun     Backup domain reset.
 *\*\param   none  
@@ -1336,23 +1353,22 @@ void RCC_MCO_Source_Config(uint32_t MCO_source)
 *\*\name    RCC_Flag_Status_Get.
 *\*\fun     Checks whether the specified RCC flag is set or not.
 *\*\param   RCC_flag:
-*\*\	      - RCC_FLAG_HSIRD      HSI oscillator clock ready
+*\*\          - RCC_FLAG_HSIRD      HSI oscillator clock ready
 *\*\          - RCC_FLAG_HSERD      HSE oscillator clock ready
-*\*\	      - RCC_FLAG_PLLRD      PLL clock ready
-*\*\	      - RCC_FLAG_LSERD      LSE oscillator clock ready
-*\*\	      - RCC_FLAG_LSIRD      LSI oscillator clock ready
-*\*\	      - RCC_FLAG_BORRST     BOR reset flag
-*\*\	      - RCC_FLAG_BKPEMC     BackUp EMC reset flag
-*\*\	      - RCC_FLAG_MMURST     Mmu reset flag
-*\*\	      - RCC_FLAG_PINRST     Pin reset
-*\*\	      - RCC_FLAG_PORRST     POR/PDR reset
-*\*\	      - RCC_FLAG_SFTRST     Software reset
-*\*\	      - RCC_FLAG_IWDGRST    Independent Watchdog reset
-*\*\	      - RCC_FLAG_WWDGRST    Window Watchdog reset
-*\*\	      - RCC_FLAG_LPWRRST    Low Power reset
+*\*\          - RCC_FLAG_PLLRD      PLL clock ready
+*\*\          - RCC_FLAG_LSERD      LSE oscillator clock ready
+*\*\          - RCC_FLAG_LSIRD      LSI oscillator clock ready
+*\*\          - RCC_FLAG_BKPEMC     BackUp EMC reset flag
+*\*\          - RCC_FLAG_MMURST     Mmu reset flag
+*\*\          - RCC_FLAG_PINRST     Pin reset
+*\*\          - RCC_FLAG_PORRST     POR/PDR reset
+*\*\          - RCC_FLAG_SFTRST     Software reset
+*\*\          - RCC_FLAG_IWDGRST    Independent Watchdog reset
+*\*\          - RCC_FLAG_WWDGRST    Window Watchdog reset
+*\*\          - RCC_FLAG_LPWRRST    Low Power reset
 *\*\return  FlagStatus:
-*\*\      	  - SET 
-*\*\  	      - RESET
+*\*\          - SET 
+*\*\          - RESET
 **/
 FlagStatus RCC_Flag_Status_Get(uint8_t RCC_flag)
 {
@@ -1409,7 +1425,6 @@ void RCC_Reset_Flag_Clear(void)
 *\*\         - RCC_INT_HSIRDIF    HSI ready interrupt
 *\*\         - RCC_INT_HSERDIF    HSE ready interrupt
 *\*\         - RCC_INT_PLLRDIF    PLL ready interrupt
-*\*\         - RCC_INT_BORIF      BOR interrupt
 *\*\         - RCC_INT_CLKSSIF    Clock Security System interrupt in HSE
 *\*\         - RCC_INT_LSESSIF    Clock security system interrupt in LSE
 *\*\return  The new state of RccInt 
@@ -1439,7 +1454,6 @@ INTStatus RCC_Interrupt_Status_Get(uint32_t interrupt_flag)
 *\*\         - RCC_INT_HSIRDICLR    HSI ready interrupt
 *\*\         - RCC_INT_HSERDICLR    HSE ready interrupt
 *\*\         - RCC_INT_PLLRDICLR    PLL ready interrupt
-*\*\         - RCC_INT_BORICLR      BOR interrupt
 *\*\         - RCC_INT_CLKSSICLR    Clock Security System interrupt in HSE
 *\*\         - RCC_INT_LSESSICLR    Clock security system interrupt in LSE
 *\*\return  none

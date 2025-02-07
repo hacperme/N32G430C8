@@ -1,29 +1,47 @@
-; ****************************************************************************
-; Copyright (c) 2019, Nations Technologies Inc.
+;     Copyright (c) 2022, Nations Technologies Inc.
+; 
+;     All rights reserved.
 ;
-; All rights reserved.
-; ****************************************************************************
+;     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+; referred to as NATIONS). This software, and the product of NATIONS described herein 
+; (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+; of the People's Republic of China and other applicable jurisdictions worldwide.
 ;
-; Redistribution and use in source and binary forms, with or without
-; modification, are permitted provided that the following conditions are met:
+;     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+; intellectual property rights. Names and brands of third party may be mentioned or referred 
+; thereto (if any) for identification purposes only.
 ;
-; - Redistributions of source code must retain the above copyright notice,
-; this list of conditions and the disclaimer below.
+;     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+; improvements to this software at any time without notice. Please contact NATIONS and obtain 
+; the latest version of this software before placing orders.
+
+;     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+; no responsibility for the accuracy and reliability of this software.
+; 
+;     It is the responsibility of the user of this software to properly design, program, and test 
+; the functionality and safety of any application made of this information and any resulting product. 
+; In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+; consequential damages arising in any way out of the use of this software or the Product.
 ;
-; Nations' name may not be used to endorse or promote products derived from
-; this software without specific prior written permission.
+;     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+; malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+; damage. Such applications are deemed, "Insecure Usage".
 ;
-; DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
-; IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-; MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
-; DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
-; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-; LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-; OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-; LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-; EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-; ****************************************************************************
+;     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+; harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+; to any customer's Insecure Usage.
+
+;     Any express or implied warranty with regard to this software or the Product, including,but not 
+; limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+; are disclaimed to the fullest extent permitted by law.
+
+;     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+; or otherwise distribute this software for any purposes, in whole or in part.
+;
+;     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+; whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+; User shall comply with any applicable export control laws and regulations promulgated and administered by 
+; the governments of any countries asserting jurisdiction over the parties or transactions.
 
 ; Amount of memory (in bytes) allocated for Stack
 ; Tailor this value to your application needs
@@ -46,76 +64,76 @@
        
 __vector_table
         DCD     sfe(CSTACK)
-	DCD     Reset_Handler              ; Reset Handler
-	DCD     NMI_Handler                ; NMI Handler
-	DCD     HardFault_Handler          ; Hard Fault Handler
-	DCD     MemManage_Handler          ; MPU Fault Handler
-	DCD     BusFault_Handler           ; Bus Fault Handler
-	DCD     UsageFault_Handler         ; Usage Fault Handler
-	DCD     0                          ; Reserved
-	DCD     0                          ; Reserved
-	DCD     0                          ; Reserved
-	DCD     0                          ; Reserved
-	DCD     SVC_Handler                ; SVCall Handler
-	DCD     DebugMon_Handler           ; Debug Monitor Handler
-	DCD     0                          ; Reserved
-	DCD     PendSV_Handler             ; PendSV Handler
-	DCD     SysTick_Handler            ; SysTick Handler
+    DCD     Reset_Handler              ; Reset Handler
+    DCD     NMI_Handler                ; NMI Handler
+    DCD     HardFault_Handler          ; Hard Fault Handler
+    DCD     MemManage_Handler          ; MPU Fault Handler
+    DCD     BusFault_Handler           ; Bus Fault Handler
+    DCD     UsageFault_Handler         ; Usage Fault Handler
+    DCD     0                          ; Reserved
+    DCD     0                          ; Reserved
+    DCD     0                          ; Reserved
+    DCD     0                          ; Reserved
+    DCD     SVC_Handler                ; SVCall Handler
+    DCD     DebugMon_Handler           ; Debug Monitor Handler
+    DCD     0                          ; Reserved
+    DCD     PendSV_Handler             ; PendSV Handler
+    DCD     SysTick_Handler            ; SysTick Handler
 
-	; External Interrupts
-	DCD     WWDG_IRQHandler            ; Window Watchdog
-	DCD     PVD_IRQHandler             ; PVD through EXTI Line detect
-	DCD     RTC_TAMPER_STAMP_IRQHandler; EXTI Line18
-	DCD     RTC_WKUP_IRQHandler        ; RTC_WKUP
-	DCD     FLASH_IRQHandler           ; Flash
-	DCD     RCC_IRQHandler             ; RCC
-	DCD     EXTI0_IRQHandler           ; EXTI Line 0
-	DCD     EXTI1_IRQHandler           ; EXTI Line 1
-	DCD     EXTI2_IRQHandler           ; EXTI Line 2
-	DCD     EXTI3_IRQHandler           ; EXTI Line 3
-	DCD     EXTI4_IRQHandler           ; EXTI Line 4
-	DCD     DMA_Channel1_IRQHandler    ; DMA Channel 1
-	DCD     DMA_Channel2_IRQHandler    ; DMA Channel 2
-	DCD     DMA_Channel3_IRQHandler    ; DMA Channel 3
-	DCD     DMA_Channel4_IRQHandler    ; DMA Channel 4
-	DCD     DMA_Channel5_IRQHandler    ; DMA Channel 5
-	DCD     DMA_Channel6_IRQHandler    ; DMA Channel 6
-	DCD     DMA_Channel7_IRQHandler    ; DMA Channel 7
-	DCD     DMA_Channel8_IRQHandler    ; DMA Channel 8
-	DCD     ADC_IRQHandler             ; ADC
-	DCD     MMU_IRQHandler             ; MMU
-	DCD     COMP_1_2_3_IRQHandler      ; COMP1 & COMP2 & COMP3
-	DCD     EXTI9_5_IRQHandler         ; EXTI Line 9..5
-	DCD     TIM1_BRK_IRQHandler        ; TIM1 Break
-	DCD     TIM1_UP_IRQHandler         ; TIM1 Update
-	DCD     TIM1_TRG_COM_IRQHandler    ; TIM1 Trigger and Commutation
-	DCD     TIM1_CC_IRQHandler         ; TIM1 Capture Compare
-	DCD     TIM2_IRQHandler            ; TIM2
-	DCD     TIM3_IRQHandler            ; TIM3
-	DCD     TIM4_IRQHandler            ; TIM4
-	DCD     I2C1_EV_IRQHandler         ; I2C1 Event
-	DCD     I2C1_ER_IRQHandler         ; I2C1 Error
-	DCD     I2C2_EV_IRQHandler         ; I2C2 Event
-	DCD     I2C2_ER_IRQHandler         ; I2C2 Error
-	DCD     SPI1_IRQHandler            ; SPI1
-	DCD     SPI2_IRQHandler            ; SPI2/I2S2
-	DCD     USART1_IRQHandler          ; USART1
-	DCD     USART2_IRQHandler          ; USART2
-	DCD     UART3_IRQHandler           ; UART3
-	DCD     EXTI15_10_IRQHandler       ; EXTI Line 15..10
-	DCD     RTCAlarm_IRQHandler        ; RTC Alarm through EXTI Line
-	DCD     LPTIM_WKUP_IRQHandler      ; LPTIM_WKUP through EXTI line 20
-	DCD     TIM8_BRK_IRQHandler        ; TIM8 Break
-	DCD     TIM8_UP_IRQHandler         ; TIM8 Update
-	DCD     TIM8_TRG_COM_IRQHandler    ; TIM8 Trigger and Commutation
-	DCD     TIM8_CC_IRQHandler         ; TIM8 Capture Compare
-	DCD     UART4_IRQHandler           ; UART4
-	DCD     TIM5_IRQHandler            ; TIM5
-	DCD     TIM6_IRQHandler            ; TIM6
-	DCD     CAN_TX_IRQHandler          ; CAN TX
-	DCD     CAN_RX0_IRQHandler         ; CAN RX0
-	DCD     CAN_RX1_IRQHandler         ; CAN RX1
-	DCD     CAN_SCE_IRQHandler         ; CAN SCE
+    ; External Interrupts
+    DCD     WWDG_IRQHandler            ; Window Watchdog
+    DCD     PVD_IRQHandler             ; PVD through EXTI Line detect
+    DCD     RTC_TAMPER_STAMP_IRQHandler; EXTI Line18
+    DCD     RTC_WKUP_IRQHandler        ; RTC_WKUP
+    DCD     FLASH_IRQHandler           ; Flash
+    DCD     RCC_IRQHandler             ; RCC
+    DCD     EXTI0_IRQHandler           ; EXTI Line 0
+    DCD     EXTI1_IRQHandler           ; EXTI Line 1
+    DCD     EXTI2_IRQHandler           ; EXTI Line 2
+    DCD     EXTI3_IRQHandler           ; EXTI Line 3
+    DCD     EXTI4_IRQHandler           ; EXTI Line 4
+    DCD     DMA_Channel1_IRQHandler    ; DMA Channel 1
+    DCD     DMA_Channel2_IRQHandler    ; DMA Channel 2
+    DCD     DMA_Channel3_IRQHandler    ; DMA Channel 3
+    DCD     DMA_Channel4_IRQHandler    ; DMA Channel 4
+    DCD     DMA_Channel5_IRQHandler    ; DMA Channel 5
+    DCD     DMA_Channel6_IRQHandler    ; DMA Channel 6
+    DCD     DMA_Channel7_IRQHandler    ; DMA Channel 7
+    DCD     DMA_Channel8_IRQHandler    ; DMA Channel 8
+    DCD     ADC_IRQHandler             ; ADC
+    DCD     MMU_IRQHandler             ; MMU
+    DCD     COMP_1_2_3_IRQHandler      ; COMP1 & COMP2 & COMP3
+    DCD     EXTI9_5_IRQHandler         ; EXTI Line 9..5
+    DCD     TIM1_BRK_IRQHandler        ; TIM1 Break
+    DCD     TIM1_UP_IRQHandler         ; TIM1 Update
+    DCD     TIM1_TRG_COM_IRQHandler    ; TIM1 Trigger and Commutation
+    DCD     TIM1_CC_IRQHandler         ; TIM1 Capture Compare
+    DCD     TIM2_IRQHandler            ; TIM2
+    DCD     TIM3_IRQHandler            ; TIM3
+    DCD     TIM4_IRQHandler            ; TIM4
+    DCD     I2C1_EV_IRQHandler         ; I2C1 Event
+    DCD     I2C1_ER_IRQHandler         ; I2C1 Error
+    DCD     I2C2_EV_IRQHandler         ; I2C2 Event
+    DCD     I2C2_ER_IRQHandler         ; I2C2 Error
+    DCD     SPI1_IRQHandler            ; SPI1
+    DCD     SPI2_IRQHandler            ; SPI2/I2S2
+    DCD     USART1_IRQHandler          ; USART1
+    DCD     USART2_IRQHandler          ; USART2
+    DCD     UART3_IRQHandler           ; UART3
+    DCD     EXTI15_10_IRQHandler       ; EXTI Line 15..10
+    DCD     RTCAlarm_IRQHandler        ; RTC Alarm through EXTI Line
+    DCD     LPTIM_WKUP_IRQHandler      ; LPTIM_WKUP through EXTI line 20
+    DCD     TIM8_BRK_IRQHandler        ; TIM8 Break
+    DCD     TIM8_UP_IRQHandler         ; TIM8 Update
+    DCD     TIM8_TRG_COM_IRQHandler    ; TIM8 Trigger and Commutation
+    DCD     TIM8_CC_IRQHandler         ; TIM8 Capture Compare
+    DCD     UART4_IRQHandler           ; UART4
+    DCD     TIM5_IRQHandler            ; TIM5
+    DCD     TIM6_IRQHandler            ; TIM6
+    DCD     CAN_TX_IRQHandler          ; CAN TX
+    DCD     CAN_RX0_IRQHandler         ; CAN RX0
+    DCD     CAN_RX1_IRQHandler         ; CAN RX1
+    DCD     CAN_SCE_IRQHandler         ; CAN SCE
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -305,138 +323,138 @@ TIM1_UP_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM1_TRG_COM_IRQHandler
         B TIM1_TRG_COM_IRQHandler
-		
-		PUBWEAK TIM1_CC_IRQHandler
+        
+        PUBWEAK TIM1_CC_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM1_CC_IRQHandler
         B TIM1_CC_IRQHandler
-		
-		PUBWEAK TIM2_IRQHandler
+        
+        PUBWEAK TIM2_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM2_IRQHandler
         B TIM2_IRQHandler
-		
-		PUBWEAK TIM3_IRQHandler
+        
+        PUBWEAK TIM3_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM3_IRQHandler
         B TIM3_IRQHandler
-		
-		PUBWEAK TIM4_IRQHandler
+        
+        PUBWEAK TIM4_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM4_IRQHandler
         B TIM4_IRQHandler
-		
-		PUBWEAK I2C1_EV_IRQHandler
+        
+        PUBWEAK I2C1_EV_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 I2C1_EV_IRQHandler
         B I2C1_EV_IRQHandler
-		
-		PUBWEAK I2C1_ER_IRQHandler
+        
+        PUBWEAK I2C1_ER_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 I2C1_ER_IRQHandler
         B I2C1_ER_IRQHandler
-		
-		PUBWEAK I2C2_EV_IRQHandler
+        
+        PUBWEAK I2C2_EV_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 I2C2_EV_IRQHandler
         B I2C2_EV_IRQHandler
-		
-		PUBWEAK I2C2_ER_IRQHandler
+        
+        PUBWEAK I2C2_ER_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 I2C2_ER_IRQHandler
         B I2C2_ER_IRQHandler
-		
-		PUBWEAK SPI1_IRQHandler
+        
+        PUBWEAK SPI1_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 SPI1_IRQHandler
         B SPI1_IRQHandler
-		
-		PUBWEAK SPI2_IRQHandler
+
+        PUBWEAK SPI2_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 SPI2_IRQHandler
         B SPI2_IRQHandler
-		
-		PUBWEAK USART1_IRQHandler
+
+        PUBWEAK USART1_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 USART1_IRQHandler
         B USART1_IRQHandler
-		
-		PUBWEAK USART2_IRQHandler
+        
+        PUBWEAK USART2_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 USART2_IRQHandler
         B USART2_IRQHandler
-		
-		PUBWEAK UART3_IRQHandler
+        
+        PUBWEAK UART3_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 UART3_IRQHandler
         B UART3_IRQHandler
-		
-		PUBWEAK EXTI15_10_IRQHandler
+        
+        PUBWEAK EXTI15_10_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 EXTI15_10_IRQHandler
         B EXTI15_10_IRQHandler
-		
-		PUBWEAK RTCAlarm_IRQHandler
+        
+        PUBWEAK RTCAlarm_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 RTCAlarm_IRQHandler
         B RTCAlarm_IRQHandler
-		
-		PUBWEAK LPTIM_WKUP_IRQHandler
+        
+        PUBWEAK LPTIM_WKUP_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 LPTIM_WKUP_IRQHandler
         B LPTIM_WKUP_IRQHandler
-		
-		PUBWEAK TIM8_BRK_IRQHandler
+        
+        PUBWEAK TIM8_BRK_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM8_BRK_IRQHandler
         B TIM8_BRK_IRQHandler
-		
-		PUBWEAK TIM8_UP_IRQHandler
+        
+        PUBWEAK TIM8_UP_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM8_UP_IRQHandler
         B TIM8_UP_IRQHandler
-		
-		PUBWEAK TIM8_TRG_COM_IRQHandler
+        
+        PUBWEAK TIM8_TRG_COM_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM8_TRG_COM_IRQHandler
         B TIM8_TRG_COM_IRQHandler
-		
-		PUBWEAK TIM8_CC_IRQHandler
+
+        PUBWEAK TIM8_CC_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM8_CC_IRQHandler
         B TIM8_CC_IRQHandler
-		
-		PUBWEAK UART4_IRQHandler
+        
+        PUBWEAK UART4_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 UART4_IRQHandler
         B UART4_IRQHandler
-		
-		PUBWEAK TIM5_IRQHandler
+        
+        PUBWEAK TIM5_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM5_IRQHandler
         B TIM5_IRQHandler
-		
-		PUBWEAK TIM6_IRQHandler
+        
+        PUBWEAK TIM6_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 TIM6_IRQHandler
         B TIM6_IRQHandler
-		
-		PUBWEAK CAN_TX_IRQHandler
+        
+        PUBWEAK CAN_TX_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 CAN_TX_IRQHandler
         B CAN_TX_IRQHandler
-		
-		PUBWEAK CAN_RX0_IRQHandler
+        
+        PUBWEAK CAN_RX0_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 CAN_RX0_IRQHandler
         B CAN_RX0_IRQHandler
-		
-		PUBWEAK CAN_RX1_IRQHandler
+        
+        PUBWEAK CAN_RX1_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 CAN_RX1_IRQHandler
         B CAN_RX1_IRQHandler
-		
-		PUBWEAK CAN_SCE_IRQHandler
+        
+        PUBWEAK CAN_SCE_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 CAN_SCE_IRQHandler
         B CAN_SCE_IRQHandler

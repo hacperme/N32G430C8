@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430_flash.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.0.2
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/
 #include "n32g430_flash.h"
 
@@ -40,9 +60,10 @@
 *\*\fun     Sets the code latency value.
 *\*\note    This function can be used for N32G430 devices.
 *\*\param   flash_latency :
-*\*\            - FLASH_LATENCY_0    FLASH Zero Latency cycle
-*\*\            - FLASH_LATENCY_1    FLASH One Latency cycle
-*\*\            - FLASH_LATENCY_2    FLASH Two Latency cycles
+*\*\            - FLASH_LATENCY_0    FLASH Zero Latency cycle, 0 < HCLK <= 32MHz      
+*\*\            - FLASH_LATENCY_1    FLASH One Latency cycle, 32MHz < HCLK<= 64MHz
+*\*\            - FLASH_LATENCY_2    FLASH Two Latency cycles, 64MHz < HCLK<= 96MHz
+*\*\            - FLASH_LATENCY_3    FLASH Three Latency cycles, 96MHz < HCLK
 *\*\return  none
 **/
 void FLASH_Latency_Set(uint32_t flash_latency)
@@ -66,9 +87,10 @@ void FLASH_Latency_Set(uint32_t flash_latency)
 *\*\note    This function can be used for N32G430 devices.
 *\*\param   none
 *\*\return  FLASH_LATENCY :
-*\*\            - FLASH_LATENCY_0    FLASH Zero Latency cycle
-*\*\            - FLASH_LATENCY_1    FLASH One Latency cycle
-*\*\            - FLASH_LATENCY_2    FLASH Two Latency cycles
+*\*\            - FLASH_LATENCY_0    FLASH Zero Latency cycle, 0 < HCLK <= 32MHz      
+*\*\            - FLASH_LATENCY_1    FLASH One Latency cycle, 32MHz < HCLK<= 64MHz
+*\*\            - FLASH_LATENCY_2    FLASH Two Latency cycles, 64MHz < HCLK<= 96MHz
+*\*\            - FLASH_LATENCY_3    FLASH Three Latency cycles, 96MHz < HCLK
 **/
 uint8_t FLASH_Latency_Get(void)
 {
@@ -90,7 +112,7 @@ void FLASH_Prefetch_Buffer_Enable(void)
 }
 
 /**
-*\*\name    FLASH_Prefetch_Buffer_Set
+*\*\name    FLASH_Prefetch_Buffer_Disable
 *\*\fun     Disables the Prefetch Buffer.
 *\*\note    This function can be used for N32G430 devices.
 *\*\param   none
@@ -184,7 +206,7 @@ void FLASH_Cache_LOCK_Start(uint32_t lock_start_way)
 
 /**
 *\*\name   FLASH_Cache_LOCK_Stop
-*\*\fun    Start cache lock.
+*\*\fun    Stop cache lock.
 *\*\note   This function can be used for N32G430 devices.
 *\*\param  lock_stop_way :
 *\*\            - FLASH_CAHR_LOCKSTOP_WAY0
@@ -201,7 +223,7 @@ void FLASH_Cache_LOCK_Stop(uint32_t lock_stop_way)
 
 /**
 *\*\name   FLASH_Cache_LOCK_Cancel
-*\*\fun    Start cache lock.
+*\*\fun    Cancle cache lock.
 *\*\note   This function can be used for N32G430 devices.
 *\*\param  lock_stop_way :
 *\*\            - FLASH_CAHR_LOCKSTOP_WAY0
@@ -303,7 +325,7 @@ void Option_Bytes_Lock(void)
 
 /**
 *\*\name   Option_Bytes_Lock_Status_Get
-*\*\fun    Get the Option_Bytes status.
+*\*\fun    Get the Option Bytes lock status.
 *\*\note   This function can be used for N32G430 devices.
 *\*\param  none
 *\*\return FlagStatus :
@@ -635,7 +657,7 @@ FLASH_STS FLASH_Option_Bytes_User_RDP1_Program(uint8_t option_byte_rpd1, uint16_
 
 /**
 *\*\name   FLASH_Option_Bytes_DATA_Program
-*\*\fun    Programs a half word at a specified Option Byte Data address.
+*\*\fun    Programs a half word at a specified Option Byte Data0 and Data1.
 *\*\note   This function can be used for N32G430 devices.
 *\*\param  option_byte_data0:
 *\*\                - 0x00 to 0xFF
@@ -643,11 +665,11 @@ FLASH_STS FLASH_Option_Bytes_User_RDP1_Program(uint8_t option_byte_rpd1, uint16_
 *\*\                - 0x00 to 0xFF
 *\*\return FLASH_STS: The returned value can be: 
 *\*\                - FLASH_BUSY
-*\*\            - FLASH_ERR_PG
-*\*\            - FLASH_ERR_WRP
-*\*\            - FLASH_EOP
-*\*\            - FLASH_ERR_RDP2
-*\*\            - FLASH_TIMEOUT
+*\*\                - FLASH_ERR_PG
+*\*\                - FLASH_ERR_WRP
+*\*\                - FLASH_EOP
+*\*\                - FLASH_ERR_RDP2
+*\*\                - FLASH_TIMEOUT
 **/
 FLASH_STS FLASH_Option_Bytes_DATA_Program(uint8_t option_byte_data0,uint8_t option_byte_data1)
 {
@@ -673,8 +695,8 @@ FLASH_STS FLASH_Option_Bytes_DATA_Program(uint8_t option_byte_data0,uint8_t opti
         Option_Bytes_Unlock();
         /* Enables the Option Bytes Programming operation */
         FLASH->CTRL |= FLASH_CTRL_SET_OPTPG;
-        OBT->Data1_Data0 = (((uint32_t)option_byte_data0) << FLASH_DATA0_DATA1_OFFSET) \
-                          | ((uint32_t)option_byte_data1);
+        OBT->Data1_Data0 = (((uint32_t)option_byte_data1) << FLASH_DATA0_DATA1_OFFSET) \
+                          | ((uint32_t)option_byte_data0);
 
         /* Wait for last operation to be completed */
         status_value = FLASH_Last_Operation_Wait(PROGRAM_TIMEOUT);
@@ -864,7 +886,7 @@ FLASH_STS FLASH_Option_Bytes_User2_RDP2_Program(uint8_t option_byte_rpd2,uint8_t
 
 /**
 *\*\name   FLASH_Read_Out_Protection_L1_Enable
-*\*\fun    Enables the read out protection.
+*\*\fun    Enables the read out protection L1.
 *\*\note   If the user has already programmed the other option bytes before calling
 *\*\       this function, he must re-program them since this function erases all option bytes.
 *\*\       This function can be used for N32G430 devices.
@@ -954,7 +976,7 @@ FLASH_STS FLASH_Read_Out_Protection_L1_Enable(void)
 
 /**
 *\*\name   FLASH_Read_Out_Protection_L1_Disable
-*\*\fun    Disables the read out protection.
+*\*\fun    Disables the read out protection L1.
 *\*\note   If the user has already programmed the other option bytes before calling
 *\*\       this function, he must re-program them since this function erases all option bytes.
 *\*\       This function can be used for N32G430 devices.
@@ -1051,10 +1073,8 @@ FLASH_STS FLASH_Read_Out_Protection_L1_Disable(void)
 *\*\return FLASH_STS : 
 *\*\        - FLASH_BUSY
 *\*\        - FLASH_ERR_PG 
-*\*\        - FLASH_ERR_PV 
 *\*\        - FLASH_ERR_WRP
 *\*\        - FLASH_EOP
-*\*\        - FLASH_ERR_EV
 *\*\        - FLASH_ERR_RDP2
 *\*\        - FLASH_TIMEOUT
 **/
@@ -1161,20 +1181,28 @@ FLASH_STS FLASH_Read_Out_Protection_L2_Enable(void)
 *\*\name   FLASH_Option_Bytes_User_Get
 *\*\fun    Returns the FLASH User Option Bytes values.
 *\*\note   This function can be used for N32G430 devices.
-*\*\param  none
-*\*\return The FLASH User Option Bytes values :
-*\*\            - Bit0    IWDG_SW
-*\*\            - Bit1    RST_STOP
-*\*\            - Bit2    RST_STDBY
-*\*\            - Bit3    IWDG_STOP0_FRZ
-*\*\            - Bit4    IWDG_STOP2_FRZ
-*\*\            - Bit5    IWDG_STDBY_FRZ
-*\*\            - Bit6    IWDG_SLEEP_FRZ
+*\*\param  option_byte_bit
+*\*\            - FLASH_OB_IWDG_SW
+*\*\            - FLASH_OB_STOP_NORST
+*\*\            - FLASH_OB_STDBY_NORST
+*\*\            - FLASH_OB_IWDG_STOP0_NOFRZ
+*\*\            - FLASH_OB_IWDG_STOP2_NOFRZ
+*\*\            - FLASH_OB_IWDG_STDBY_NOFRZ
+*\*\            - FLASH_OB_IWDG_SLEEP_NOFRZ
+*\*\return FlagStatus :
+*\*\            - SET
+*\*\            - RESET
 **/
-uint32_t FLASH_Option_Bytes_User_Get(void)
+FlagStatus FLASH_Option_Bytes_User_Get(uint32_t option_byte_bit)
 {
-    /* Return the User Option Byte */
-    return (uint32_t)(FLASH->OB >> FLASH_OB_OFFSET);
+    if(((FLASH->OB >> FLASH_OB_OFFSET) & option_byte_bit) != (uint32_t)RESET)
+    {
+        return SET;
+    }
+    else
+    {
+        return RESET;
+    }
 }
 
 
@@ -1236,7 +1264,7 @@ uint32_t FLASH_Option_Bytes_Data1_Get(void)
 *\*\note   This function can be used for N32G430 devices.
 *\*\param  none
 *\*\return The FLASH Write Protection  Option Bytes Register value :
-*\*\            - Bit15 - Bit0 write-protects pages (32,31) - page (0,1) 
+*\*\            - Bit15 - Bit0 write-protects pages (31,30) - page (0,1) 
 **/
 uint32_t FLASH_Option_Bytes_Write_Protection_Get(void)
 {
@@ -1403,8 +1431,7 @@ void FLASH_Flag_Status_Clear(uint32_t flash_flag)
 /**
 *\*\name   FLASH_Status_Get
 *\*\fun    Returns the FLASH_STS.
-*\*\note   This function can be used for N32G430 devices, it is equivalent
-*\*\       to FLASH_GetBank1Status function.
+*\*\note   This function can be used for N32G430 devices.
 *\*\param  none
 *\*\return FLASH_STS :
 *\*\        - FLASH_BUSY
@@ -1446,18 +1473,15 @@ FLASH_STS FLASH_Status_Get(void)
 /**
 *\*\name   FLASH_Last_Operation_Wait
 *\*\fun    Waits for a Flash operation to complete or a timeout to occur.
-*\*\note   This function can be used for N32G430 devices,
-*\*\       it is equivalent to FLASH_WaitForLastBank1Operation..
+*\*\note   This function can be used for N32G430 devices.
 *\*\param  timeout :
 *\*\            - ERASE_TIMEOUT
 *\*\            - PROGRAM_TIMEOUT
 *\*\return FLASH_STS: The returned value can be: 
 *\*\            - FLASH_BUSY
 *\*\            - FLASH_ERR_PG 
-*\*\            - FLASH_ERR_PV 
 *\*\            - FLASH_ERR_WRP
 *\*\            - FLASH_EOP
-*\*\            - FLASH_ERR_EV
 *\*\            - FLASH_TIMEOUT
 **/
 FLASH_STS FLASH_Last_Operation_Wait(uint32_t timeout)

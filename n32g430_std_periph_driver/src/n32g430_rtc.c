@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
  
 /**
 *\*\file n32g430_rtc.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.1.0
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/
  
 #include "n32g430_rtc.h"
@@ -41,6 +61,8 @@ static void RTC_Prescale_Config(uint32_t synch_prediv, uint32_t asynch_prediv);
 static void RTC_Registers_Reset(void);
 static uint8_t RTC_Byte_To_Bcd2(uint8_t Value);
 static uint8_t RTC_Bcd2_To_Byte(uint8_t Value);
+
+#define INITSUBS_TIMEOUT        0x100000
 
 /**
 *\*\name    RTC_Structure_Initializes.
@@ -103,6 +125,14 @@ ErrorStatus RTC_Initialization_Mode_Enter(void)
     /* Check if the Initialization mode is set */
     if ((RTC->INITSTS & RTC_FLAG_INITF) == (uint32_t)RESET)
     {
+        temp_value1 = RTC->PRE;
+        /* SUBS is not less than 2 before entering the initialization mode */
+        while((RTC->SUBS < 3 || RTC->SUBS == (temp_value1 & 0x7FFF)) && (temp_value != INITSUBS_TIMEOUT))
+        {
+            temp_value++;
+        }
+        temp_value = 0;
+        temp_value1 = 0;
         /* Set the Initialization mode */
         RTC->INITSTS = (uint32_t)RTC_FLAG_INITM;
 
@@ -459,6 +489,7 @@ void RTC_Time_Get(uint32_t RTC_Format, RTC_TimeType* RTC_TimeStruct)
         RTC_TimeStruct->Minutes = (uint8_t)RTC_Bcd2_To_Byte(RTC_TimeStruct->Minutes);
         RTC_TimeStruct->Seconds = (uint8_t)RTC_Bcd2_To_Byte(RTC_TimeStruct->Seconds);
     }
+    RTC->DATE;
 }
 
 /**
@@ -468,8 +499,11 @@ void RTC_Time_Get(uint32_t RTC_Format, RTC_TimeType* RTC_TimeStruct)
 **/
 uint32_t RTC_SubSecond_Get(void)
 {
-    /* Get subseconds values from the correspondent registers*/
-    return RTC->SUBS;
+    uint32_t temp;
+	/* Get subseconds values from the correspondent registers*/
+    temp = RTC->SUBS;
+    RTC->DATE;
+    return temp;
 }
 
 #ifdef RTC_DELAY_USE_TIM6
@@ -1145,18 +1179,20 @@ void RTC_WakeUp_Clock_Select(RTC_WAKE_UP_CLOCK RTC_WakeUp_Clock)
 /**
 *\*\name    RTC_WakeUp_Counter_Set.
 *\*\fun     Configures the RTC Wakeup counter.
-*\*\param   RTC_WakeUpCounter : specifies the WakeUp counter, the value in the 0-0xFFFF range
+*\*\param   RTC_WakeUpCounter : specifies the WakeUp counter, the value in the 1-0xFFFF range
 *\*\return  none
 **/
 void RTC_WakeUp_Counter_Set(uint32_t RTC_WakeUpCounter)
 {
+    uint16_t temp_value = 0;
     /* Disable the write protection for RTC registers */
     RTC_Write_Protection_Disable();
-
+    
+    temp_value = RTC->PRE & 0x7FFF; 
     /* wait subs synchronize*/
-    while(RTC->SUBS != (RTC->PRE & 0X7FFF));
+    while(RTC->SUBS != temp_value);
     /* Configure the Wakeup Timer counter */
-    RTC->WKUPT = (uint32_t)RTC_WakeUpCounter;
+    RTC->WKUPT = (uint16_t)RTC_WakeUpCounter;
 
     /* Enable the write protection for RTC registers */
     RTC_Write_Protection_Enable();

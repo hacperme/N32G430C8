@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430.h
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.0.2
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/ 
 #ifndef __N32G430_H__
 #define __N32G430_H__
@@ -384,7 +404,7 @@ typedef struct
 /*** Beeper **/
 typedef struct
 {
-	  __IO uint32_t CTRL;
+    __IO uint32_t CTRL;
 } BEEPER_Module;
 
 /*** DMA Controller ***/
@@ -557,26 +577,26 @@ typedef struct
     __IO uint32_t CTRLSTS;
     __IO uint32_t AHBPRST;
     __IO uint32_t CFG2;
-    __IO uint32_t CFG3;
+    __IO uint32_t Reserve;
     __IO uint32_t RDCTRL;
     __IO uint32_t Reserve0;
     __IO uint32_t Reserve1; 
     __IO uint32_t PLLHSIPRE;
-	__IO uint32_t Reserve2;
+    __IO uint32_t Reserve2;
     __IO uint32_t Reserve3; 
-	__IO uint32_t Reserve4;
+    __IO uint32_t Reserve4;
     __IO uint32_t Reserve5; 
-	__IO uint32_t Reserve6;
+    __IO uint32_t Reserve6;
     __IO uint32_t Reserve7; 
-	__IO uint32_t Reserve8;
+    __IO uint32_t Reserve8;
     __IO uint32_t Reserve9; 
-	__IO uint32_t Reserve10;
+    __IO uint32_t Reserve10;
     __IO uint32_t Reserve11; 
-	__IO uint32_t Reserve12;
+    __IO uint32_t Reserve12;
     __IO uint32_t Reserve13; 
-	__IO uint32_t Reserve14;
+    __IO uint32_t Reserve14;
     __IO uint32_t Reserve15; 
-	__IO uint32_t Reserve16;
+    __IO uint32_t Reserve16;
     __IO uint32_t AHB1CLKEN;
 } RCC_Module;
 
@@ -1108,20 +1128,17 @@ typedef struct
 #define RCC_CLKINT_HSIRDIF   ((uint32_t)0x00000004) /* HSI Ready Interrupt flag */
 #define RCC_CLKINT_HSERDIF   ((uint32_t)0x00000008) /* HSE Ready Interrupt flag */
 #define RCC_CLKINT_PLLRDIF   ((uint32_t)0x00000010) /* PLL Ready Interrupt flag */
-#define RCC_CLKINT_BORIF     ((uint32_t)0x00000020) /* BOR Interrupt flag */
 #define RCC_CLKINT_CLKSSIF   ((uint32_t)0x00000080) /* Clock Security System Interrupt flag */
 #define RCC_CLKINT_LSIRDIEN  ((uint32_t)0x00000100) /* LSI Ready Interrupt Enable */
 #define RCC_CLKINT_LSERDIEN  ((uint32_t)0x00000200) /* LSE Ready Interrupt Enable */
 #define RCC_CLKINT_HSIRDIEN  ((uint32_t)0x00000400) /* HSI Ready Interrupt Enable */
 #define RCC_CLKINT_HSERDIEN  ((uint32_t)0x00000800) /* HSE Ready Interrupt Enable */
 #define RCC_CLKINT_PLLRDIEN  ((uint32_t)0x00001000) /* PLL Ready Interrupt Enable */
-#define RCC_CLKINT_BORIEN    ((uint32_t)0x00002000) /* BOR Interrupt Enable */
 #define RCC_CLKINT_LSIRDICLR ((uint32_t)0x00010000) /* LSI Ready Interrupt Clear */
 #define RCC_CLKINT_LSERDICLR ((uint32_t)0x00020000) /* LSE Ready Interrupt Clear */
 #define RCC_CLKINT_HSIRDICLR ((uint32_t)0x00040000) /* HSI Ready Interrupt Clear */
 #define RCC_CLKINT_HSERDICLR ((uint32_t)0x00080000) /* HSE Ready Interrupt Clear */
 #define RCC_CLKINT_PLLRDICLR ((uint32_t)0x00100000) /* PLL Ready Interrupt Clear */
-#define RCC_CLKINT_BORICLR   ((uint32_t)0x00200000) /* BOR Interrupt Clear */
 #define RCC_CLKINT_CLKSSICLR ((uint32_t)0x00800000) /* Clock Security System Interrupt Clear */
 #define RCC_CLKINT_LSESSIF   ((uint32_t)0x01000000) /* LSE Security System Interrupt flag */
 #define RCC_CLKINT_LSESSIEN  ((uint32_t)0x02000000) /* LSE ecurity System Interrupt Enable */
@@ -1212,7 +1229,6 @@ typedef struct
 /** Bit definition for RCC_CTRLSTS register **/
 #define RCC_CTRLSTS_LSIEN    ((uint32_t)0x00000001) /* Internal Low Speed oscillator enable */
 #define RCC_CTRLSTS_LSIRD    ((uint32_t)0x00000002) /* Internal Low Speed oscillator Ready */
-#define RCC_CTRLSTS_BORRSTF  ((uint32_t)0x00080000) /* BOR reset flag */
 #define RCC_CTRLSTS_BKPEMCF  ((uint32_t)0x00200000) /* BKP_EMC reset flag */
 #define RCC_CTRLSTS_RMRSTF   ((uint32_t)0x01000000) /* Remove reset flag */
 #define RCC_CTRLSTS_MMURSTF  ((uint32_t)0x02000000) /* MMU reset flag */
@@ -1224,11 +1240,11 @@ typedef struct
 #define RCC_CTRLSTS_LPWRRSTF ((uint32_t)0x80000000) /* Low-Power reset flag */
 
 /** Bit definition for RCC_AHBPRST register **/
-#define RCC_AHBPRST_IOPARST   ((uint32_t)0x00000080) /* I/O port A clock enable */
-#define RCC_AHBPRST_IOPBRST   ((uint32_t)0x00000100) /* I/O port B clock enable */
-#define RCC_AHBPRST_IOPCRST   ((uint32_t)0x00000200) /* I/O port C clock enable */
-#define RCC_AHBPRST_IOPDRST   ((uint32_t)0x00000400) /* I/O port D clock enable */
-#define RCC_AHBPRST_ADCRST    ((uint32_t)0x00001000) /* ADC clock enable */
+#define RCC_AHBPRST_IOPARST   ((uint32_t)0x00000080) /* I/O port A clock reset */
+#define RCC_AHBPRST_IOPBRST   ((uint32_t)0x00000100) /* I/O port B clock reset */
+#define RCC_AHBPRST_IOPCRST   ((uint32_t)0x00000200) /* I/O port C clock reset */
+#define RCC_AHBPRST_IOPDRST   ((uint32_t)0x00000400) /* I/O port D clock reset */
+#define RCC_AHBPRST_ADCRST    ((uint32_t)0x00001000) /* ADC clock reset */
 
 /** Bit definition for RCC_CFG2 register **/
 /** ADCHPRE configuration **/
@@ -1324,13 +1340,6 @@ typedef struct
 
 #define RCC_CFG2_TIMCLKSEL_PCLK2    ((uint32_t)0x00000000) /* Timer1/8 clock selected as APB2 input clock */
 #define RCC_CFG2_TIMCLKSEL_SYSCLK   ((uint32_t)0x20000000) /* Timer1/8 clock selected as sysclk input clock */
-
-/** Bit definition for RCC_CFG3 register **/
-/** BORRSTEN configuration **/
-#define RCC_CFG3_BORRSTEN         ((uint32_t)0x00000040) /* BOR reset enable */
-
-#define RCC_CFG3_BORRSTEN_ENABLE  ((uint32_t)0x00000040) /* BOR reset enable */
-#define RCC_CFG3_BORRSTEN_DISABLE ((uint32_t)0x00000000) /* BOR reset disable */
 
 /** Bit definition for RCC_RDCTRL register **/
 /** LPTIMSEL congiguration **/
@@ -2419,26 +2428,25 @@ typedef struct
 #define ADC_DAT_ADC2DAT ((uint32_t)0xFFFF0000) /* ADC2 data */
 
 /** Bit definition for ADC_DIFSEL register **/
-#define ADC_DIFSEL_DIFSEL        ((uint32_t)0x000FFFFE) /* Differential data */
-#define ADC_DIFSEL_DIFSEL_0      ((uint32_t)0x00000002) /* Differential_1 data */
-#define ADC_DIFSEL_DIFSEL_1      ((uint32_t)0x00000004) /* Differential_2 data */
-#define ADC_DIFSEL_DIFSEL_2      ((uint32_t)0x00000008) /* Differential_3 data */
-#define ADC_DIFSEL_DIFSEL_3      ((uint32_t)0x00000010) /* Differential_4 data */
-#define ADC_DIFSEL_DIFSEL_4      ((uint32_t)0x00000020) /* Differential_5 data */
-#define ADC_DIFSEL_DIFSEL_5      ((uint32_t)0x00000040) /* Differential_6 data */
-#define ADC_DIFSEL_DIFSEL_6      ((uint32_t)0x00000080) /* Differential_7 data */
-#define ADC_DIFSEL_DIFSEL_7      ((uint32_t)0x00000100) /* Differential_8 data */
-#define ADC_DIFSEL_DIFSEL_8      ((uint32_t)0x00000200) /* Differential_9 data */
-#define ADC_DIFSEL_DIFSEL_9      ((uint32_t)0x00000400) /* Differential_10 data */
-#define ADC_DIFSEL_DIFSEL_10     ((uint32_t)0x00000800) /* Differential_11 data */
-#define ADC_DIFSEL_DIFSEL_11     ((uint32_t)0x00001000) /* Differential_12 data */
-#define ADC_DIFSEL_DIFSEL_12     ((uint32_t)0x00002000) /* Differential_13 data */
-#define ADC_DIFSEL_DIFSEL_13     ((uint32_t)0x00004000) /* Differential_14 data */
-#define ADC_DIFSEL_DIFSEL_14     ((uint32_t)0x00008000) /* Differential_15 data */
-#define ADC_DIFSEL_DIFSEL_15     ((uint32_t)0x00010000) /* Differential_16 data */
-#define ADC_DIFSEL_DIFSEL_16     ((uint32_t)0x00020000) /* Differential_17 data */
-#define ADC_DIFSEL_DIFSEL_17     ((uint32_t)0x00040000) /* Differential_18 data */
-#define ADC_DIFSEL_DIFSEL_18     ((uint32_t)0x00080000) /* Differential_19 data */
+#define ADC_DIFSEL_DIFSEL        ((uint32_t)0x0007FFFE) /* Differential data */
+#define ADC_DIFSEL_DIFSEL_1      ((uint32_t)0x00000002) /* Differential_1 data */
+#define ADC_DIFSEL_DIFSEL_2      ((uint32_t)0x00000004) /* Differential_2 data */
+#define ADC_DIFSEL_DIFSEL_3      ((uint32_t)0x00000008) /* Differential_3 data */
+#define ADC_DIFSEL_DIFSEL_4      ((uint32_t)0x00000010) /* Differential_4 data */
+#define ADC_DIFSEL_DIFSEL_5      ((uint32_t)0x00000020) /* Differential_5 data */
+#define ADC_DIFSEL_DIFSEL_6      ((uint32_t)0x00000040) /* Differential_6 data */
+#define ADC_DIFSEL_DIFSEL_7      ((uint32_t)0x00000080) /* Differential_7 data */
+#define ADC_DIFSEL_DIFSEL_8      ((uint32_t)0x00000100) /* Differential_8 data */
+#define ADC_DIFSEL_DIFSEL_9      ((uint32_t)0x00000200) /* Differential_9 data */
+#define ADC_DIFSEL_DIFSEL_10      ((uint32_t)0x00000400) /* Differential_10 data */
+#define ADC_DIFSEL_DIFSEL_11     ((uint32_t)0x00000800) /* Differential_11 data */
+#define ADC_DIFSEL_DIFSEL_12     ((uint32_t)0x00001000) /* Differential_12 data */
+#define ADC_DIFSEL_DIFSEL_13     ((uint32_t)0x00002000) /* Differential_13 data */
+#define ADC_DIFSEL_DIFSEL_14     ((uint32_t)0x00004000) /* Differential_14 data */
+#define ADC_DIFSEL_DIFSEL_15     ((uint32_t)0x00008000) /* Differential_15 data */
+#define ADC_DIFSEL_DIFSEL_16     ((uint32_t)0x00010000) /* Differential_16 data */
+#define ADC_DIFSEL_DIFSEL_17     ((uint32_t)0x00020000) /* Differential_17 data */
+#define ADC_DIFSEL_DIFSEL_18     ((uint32_t)0x00040000) /* Differential_18 data */
 
 /** Bit definition for ADC_CALFACT register **/
 #define ADC_CALFACT_CALFACTS     ((uint32_t)0x0000007F) /* Calibration factors in single data */
@@ -2579,7 +2587,7 @@ typedef struct
 
 #define COMP2_CTRL_OUT       ((uint32_t)0x00080000) /* Output state of Comparator_2 */
 #define COMP2_CTRL_PWRMODE   ((uint32_t)0x00100000) /* Power mode of Comparator_2 */
-#define COMP2_CTRL_FILTVAL   ((uint32_t)0000200000) /* Output state after the digital filter Comparator_2 */
+#define COMP2_CTRL_FILTVAL   ((uint32_t)0x00200000) /* Output state after the digital filter Comparator_2 */
 
 
 /** COMP2_FILC register **/
@@ -2699,7 +2707,7 @@ typedef struct
 #define TIM_CTRL2_MMSEL_0   ((uint32_t)0x00000010) /* Bit 0 */
 #define TIM_CTRL2_MMSEL_1   ((uint32_t)0x00000020) /* Bit 1 */
 #define TIM_CTRL2_MMSEL_2   ((uint32_t)0x00000040) /* Bit 2 */
-#define TIM_CTRL3_MMSEL_3   ((uint32_t)0x01000000) /* Bit 3 */
+#define TIM_CTRL2_MMSEL_3   ((uint32_t)0x01000000) /* Bit 3 */
 
 #define TIM_CTRL2_TI1SEL    ((uint32_t)0x00000080) /* TI1 Selection */
 #define TIM_CTRL2_TSCSEL    ((uint32_t)0x00000100) /* TSC Selection */

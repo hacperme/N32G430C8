@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People’s Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, “Insecure Usage”.
+*
+*     All Insecure Usage shall be made at user’s risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer’s Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file system_n32g430.c
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.1.0
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
  */
 #include "n32g430.h"
 
@@ -88,6 +108,10 @@
 
 #elif SYSCLK_SRC == SYSCLK_USE_HSI_PLL
 
+    #if SYSCLK_FREQ < 32000000
+    #error When SYSCLK_SRC is PLL, SYSCLK_FREQ must be greater than or equal to 32MHz
+    #endif
+
     #if (SYSCLK_FREQ % (HSI_VALUE / 2) == 0) && (SYSCLK_FREQ / (HSI_VALUE / 2) >= 2)                                       \
         && (SYSCLK_FREQ / (HSI_VALUE / 2) <= 32)
 
@@ -105,6 +129,10 @@
     #endif
 
 #elif SYSCLK_SRC == SYSCLK_USE_HSE_PLL
+
+    #if SYSCLK_FREQ < 32000000
+    #error When SYSCLK_SRC is PLL, SYSCLK_FREQ must be greater than or equal to 32MHz
+    #endif
 
     #ifndef HSE_VALUE
     #error HSE_VALUE must be defined!
@@ -149,6 +177,68 @@ static void System_Clock_Set(void);
 static void SystemInit_ExtMemCtl(void);
 #endif /* DATA_IN_ExtSRAM */
 
+typedef void (*pFunction)(uint32_t, uint32_t*);
+#if defined ( __CC_ARM )
+const uint32_t const_data1[2] __attribute__((at(0x08002118))) = {0, 0};
+const uint32_t const_data2[2] __attribute__((at(0x08002918))) = {0, 0};
+#elif defined ( __ICCARM__ )
+const uint32_t const_data1[2] @ (0x08002118) = {0, 0};
+const uint32_t const_data2[2] @ (0x08002918) = {0, 0};
+#elif defined ( __GNUC__ )  // GCC Compiler
+const uint32_t const_data1[2] __attribute__((section(".custom_section1"))) = {0, 0};
+const uint32_t const_data2[2] __attribute__((section(".custom_section2"))) = {0, 0};
+#endif
+
+void Get_NVR_Value(uint32_t addr, uint32_t* value)
+{
+    pFunction get_nvr = (pFunction)(0x1FFF02A5);
+    uint32_t data;
+
+    get_nvr(addr, value);
+    data = const_data1[0];
+    data = const_data2[0];
+    if(data)
+    {/* avoid warning*/
+    }
+}
+/**
+*\*\name    PLL_TrimValueLoad.
+*\*\fun     Load PLL trim value.
+*\*\param   none
+*\*\return  none
+**/
+void PLL_TrimValueLoad(void)
+{
+    uint32_t value = 0, value1,value3,value4;
+    uint32_t temp = 0;
+
+    /* Disable the iCache */
+    FLASH->AC &= FLASH_ICACHE_DIS;
+    /* ICache Reset */
+    FLASH->AC |= FLASH_ICAHRST_MSK;
+    
+    Get_NVR_Value(0x1FFFF020, &value);
+    if((value & 0xFF) <= 5)
+    {
+        Get_NVR_Value(0x1FFFF230,&value);
+        /* Big-endian little-endian exchange */
+        value1 = value >>24;
+        value3 = (value & 0xFF0000)>>8;
+        value4 = (value & 0xFF00)<<8;
+        value = value1 | value3  | value4;
+        
+        temp = AFEC->TRIMR1 &0xFF000000;
+        temp |= value;
+
+        AFEC->TRIMR1 = temp;
+    }
+    else
+    {
+        
+    }
+    /* Enable the iCache */
+    FLASH->AC |= FLASH_ICACHE_EN;
+}
 
 /**
 *\*\name    System_Initializes.
@@ -186,15 +276,12 @@ void System_Initializes(void)
     /* Reset CFG2 register */
     RCC->CFG2 = RCC_CFG2_ADC1MPRES_DIV8;
 
-    /* Reset CFG3 register */
-    RCC->CFG3 = REG_BIT_MASK;
-
     /* Reset PLLHSIPRE register */
-    RCC->PLLHSIPRE = REG_BIT_MASK;
+    RCC->PLLHSIPRE |= RCC_PLLHSIPRE_PLLHSIPRE;
 
     /* Disable all interrupts and clear pending bits  */
     RCC->CLKINT = (RCC_CLKINT_LSIRDICLR|RCC_CLKINT_LSERDICLR|RCC_CLKINT_HSIRDICLR
-                  |RCC_CLKINT_HSERDICLR|RCC_CLKINT_PLLRDICLR|RCC_CLKINT_BORICLR
+                  |RCC_CLKINT_HSERDICLR|RCC_CLKINT_PLLRDICLR
                   |RCC_CLKINT_CLKSSICLR|RCC_CLKINT_LSESSICLR);
 
     RCC->APB1PCLKEN |= RCC_APB1PCLKEN_PWREN;
@@ -339,6 +426,7 @@ static void System_Clock_Set(void)
     volatile uint32_t temp_value,temp_value1 = 0;
     volatile bool status_value      = 0;
     volatile uint32_t counter_value = 0;
+    uint8_t id_version = 0;
 
 #if ((SYSCLK_SRC == SYSCLK_USE_HSI) || (SYSCLK_SRC == SYSCLK_USE_HSI_PLL))
 
@@ -384,12 +472,24 @@ static void System_Clock_Set(void)
 #endif
 
     /* Flash wait state
-        0: HCLK < 50M
-        1: HCLK < 100M
-        2: HCLK <= 128M
+        C version              D version
+        0: HCLK <= 32M         0: HCLK <= 39M
+        1: HCLK <= 64M         1: HCLK <= 78M
+        2: HCLK <= 96M         2: HCLK <= 117M
+        3: HCLK <= 128M        3: HCLK <= 128M
      */
     FLASH->AC &= (uint32_t)((uint32_t)~FLASH_AC_LATENCY);
-    FLASH->AC |= (uint32_t)(SYSCLK_FREQ / SYSCLK_FREQ_50M);
+    
+    id_version = (uint8_t)(DBG->ID & 0x00FF);
+    if(id_version <= 0x12)
+    {
+        FLASH->AC |= (uint32_t)((SYSCLK_FREQ - 1) / SYSCLK_FREQ_32M);
+    }
+    else
+    {
+        FLASH->AC |= (uint32_t)((SYSCLK_FREQ - 1) / SYSCLK_FREQ_39M);
+    }
+        
 
     /* HCLK = SYSCLK */
     RCC->CFG |= (uint32_t)RCC_CFG_AHBPRES_DIV1;
@@ -424,6 +524,7 @@ static void System_Clock_Set(void)
     RCC->CFG |= (uint32_t)RCC_CFG_SCLKSW_HSI;
 
     /* Wait till HSI is used as system clock source */
+    /* if system clock switch fail, User can add here some code to deal with this error */
     while ((RCC->CFG & (uint32_t)RCC_CFG_SCLKSTS) != (uint32_t)SYSCLOCK_SRC_HSI)
     {
     }
@@ -433,11 +534,13 @@ static void System_Clock_Set(void)
     RCC->CFG |= (uint32_t)RCC_CFG_SCLKSW_HSE;
 
     /* Wait till HSE is used as system clock source */
+    /* if system clock switch fail, User can add here some code to deal with this error */
     while ((RCC->CFG & (uint32_t)RCC_CFG_SCLKSTS) != (uint32_t)SYSCLOCK_SRC_HSE)
     {
     }
+    /* if Wait till HSE is used as system clock source */
 #elif SYSCLK_SRC == SYSCLK_USE_HSI_PLL || SYSCLK_SRC == SYSCLK_USE_HSE_PLL
-
+    PLL_TrimValueLoad();
     /* clear bits */
     RCC->CFG &= (uint32_t)((uint32_t) ~(RCC_CFG_PLLSRC | RCC_CFG_PLLHSEPRES | RCC_CFG_PLLMULFCT));
     RCC->PLLHSIPRE &= (uint32_t)((uint32_t) ~(RCC_PLLHSIPRE_PLLHSIPRE));
@@ -468,6 +571,7 @@ static void System_Clock_Set(void)
     RCC->CTRL |= RCC_CTRL_PLLEN;
 
     /* Wait till PLL is ready */
+    /* if PLL fails to start-up,, User can add here some code to deal with this error */
     while ((RCC->CTRL & RCC_CTRL_PLLRDF) == RESET) 
     {
     }
@@ -477,6 +581,7 @@ static void System_Clock_Set(void)
     RCC->CFG |= (uint32_t)RCC_CFG_SCLKSW_PLL;
 
     /* Wait till PLL is used as system clock source */
+    /* if system clock switch fail, User can add here some code to deal with this error */
     while ((RCC->CFG & (uint32_t)RCC_CFG_SCLKSTS) != (uint32_t)SYSCLOCK_SRC_PLL) 
     {
     }

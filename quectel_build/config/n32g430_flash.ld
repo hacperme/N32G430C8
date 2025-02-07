@@ -54,6 +54,16 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
+  .custom_section1 0x08002118 :
+  {
+    KEEP(*(.custom_section1))
+  } >FLASH
+
+  .custom_section2 0x08002918 :
+  {
+    KEEP(*(.custom_section2))
+  } >FLASH
+
   /* The program code and other data goes into FLASH */
   .text :
   {

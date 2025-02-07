@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430_tim.h
 *\*\author Nations
-*\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\version v1.0.2
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
 **/
 #ifndef __N32G430_TIM_H__
 #define __N32G430_TIM_H__
@@ -443,23 +463,6 @@ typedef struct
 #define TIM_DMABASE_CAPCMPDAT4 ((uint16_t)0x0010)
 #define TIM_DMABASE_BKDT       ((uint16_t)0x0011)
 #define TIM_DMABASE_DMACTRL    ((uint16_t)0x0012)
-#define TIM_DMABASE_DMAADDR    ((uint16_t)0x0013)
-#define TIM_DMABASE_CAPCMPMOD3 ((uint16_t)0x0014)
-#define TIM_DMABASE_CAPCMPDAT5 ((uint16_t)0x0015)
-#define TIM_DMABASE_CAPCMPDAT6 ((uint16_t)0x0016)
-#define TIM_DMABASE_CAPCMPDAT7 ((uint16_t)0x0017)
-#define TIM_DMABASE_CAPCMPDAT8 ((uint16_t)0x0018)
-#define TIM_DMABASE_CAPCMPDAT9 ((uint16_t)0x0019)
-#define TIM_DMABASE_BRKFILT    ((uint16_t)0x001A)
-#define TIM_DMABASE_C1FLIT     ((uint16_t)0x001B)
-#define TIM_DMABASE_C2FLIT     ((uint16_t)0x001C)
-#define TIM_DMABASE_C3FLIT     ((uint16_t)0x001D)
-#define TIM_DMABASE_C4FLIT     ((uint16_t)0x001E)
-#define TIM_DMABASE_FILTO      ((uint16_t)0x001F)
-
-
-
-
 
 /** TIM_DMA_Burst_Length **/
 #define TIM_DMABURST_LENGTH_1TRANSFER   (TIM_REG16_BIT_ZERO)
@@ -480,21 +483,6 @@ typedef struct
 #define TIM_DMABURST_LENGTH_16TRANSFERS ((uint16_t)0x0F00)
 #define TIM_DMABURST_LENGTH_17TRANSFERS ((uint16_t)0x1000)
 #define TIM_DMABURST_LENGTH_18TRANSFERS ((uint16_t)0x1100)
-#define TIM_DMABURST_LENGTH_19TRANSFERS ((uint16_t)0x1200)
-#define TIM_DMABURST_LENGTH_20TRANSFERS ((uint16_t)0x1300)
-#define TIM_DMABURST_LENGTH_21TRANSFERS ((uint16_t)0x1400)
-#define TIM_DMABURST_LENGTH_22TRANSFERS ((uint16_t)0x1500)
-#define TIM_DMABURST_LENGTH_23TRANSFERS ((uint16_t)0x1600)
-#define TIM_DMABURST_LENGTH_24TRANSFERS ((uint16_t)0x1700)
-#define TIM_DMABURST_LENGTH_25TRANSFERS ((uint16_t)0x1800)
-#define TIM_DMABURST_LENGTH_26TRANSFERS ((uint16_t)0x1900)
-#define TIM_DMABURST_LENGTH_27TRANSFERS ((uint16_t)0x1A00)
-#define TIM_DMABURST_LENGTH_28TRANSFERS ((uint16_t)0x1B00)
-#define TIM_DMABURST_LENGTH_29TRANSFERS ((uint16_t)0x1C00)
-#define TIM_DMABURST_LENGTH_30TRANSFERS ((uint16_t)0x1D00)
-#define TIM_DMABURST_LENGTH_31TRANSFERS ((uint16_t)0x1E00)
-#define TIM_DMABURST_LENGTH_32TRANSFERS ((uint16_t)0x1F00)
-
 
 /** TIM_DMA_sources **/
 #define TIM_DMA_UPDATE      (TIM_DINTEN_UDEN)
@@ -927,4 +915,8 @@ void TIM_Channel4_Filter_Disable(TIM_Module* TIMx);
 void TIM_Break_Filter_Enable(TIM_Module * TIMx);
 void TIM_Break_Filter_Disable(TIM_Module * TIMx);
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif /* _N32G430_TIM_H__ */

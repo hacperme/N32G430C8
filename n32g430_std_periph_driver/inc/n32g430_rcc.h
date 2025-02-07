@@ -1,35 +1,55 @@
-/*****************************************************************************
- * Copyright (c) 2019, Nations Technologies Inc.
- *
- * All rights reserved.
- * ****************************************************************************
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the disclaimer below.
- *
- * Nations' name may not be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY NATIONS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * DISCLAIMED. IN NO EVENT SHALL NATIONS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ****************************************************************************/
+/**
+*     Copyright (c) 2022, Nations Technologies Inc.
+* 
+*     All rights reserved.
+*
+*     This software is the exclusive property of Nations Technologies Inc. (Hereinafter 
+* referred to as NATIONS). This software, and the product of NATIONS described herein 
+* (Hereinafter referred to as the Product) are owned by NATIONS under the laws and treaties
+* of the People's Republic of China and other applicable jurisdictions worldwide.
+*
+*     NATIONS does not grant any license under its patents, copyrights, trademarks, or other 
+* intellectual property rights. Names and brands of third party may be mentioned or referred 
+* thereto (if any) for identification purposes only.
+*
+*     NATIONS reserves the right to make changes, corrections, enhancements, modifications, and 
+* improvements to this software at any time without notice. Please contact NATIONS and obtain 
+* the latest version of this software before placing orders.
+
+*     Although NATIONS has attempted to provide accurate and reliable information, NATIONS assumes 
+* no responsibility for the accuracy and reliability of this software.
+* 
+*     It is the responsibility of the user of this software to properly design, program, and test 
+* the functionality and safety of any application made of this information and any resulting product. 
+* In no event shall NATIONS be liable for any direct, indirect, incidental, special,exemplary, or 
+* consequential damages arising in any way out of the use of this software or the Product.
+*
+*     NATIONS Products are neither intended nor warranted for usage in systems or equipment, any
+* malfunction or failure of which may cause loss of human life, bodily injury or severe property 
+* damage. Such applications are deemed, "Insecure Usage".
+*
+*     All Insecure Usage shall be made at user's risk. User shall indemnify NATIONS and hold NATIONS 
+* harmless from and against all claims, costs, damages, and other liabilities, arising from or related 
+* to any customer's Insecure Usage.
+
+*     Any express or implied warranty with regard to this software or the Product, including,but not 
+* limited to, the warranties of merchantability, fitness for a particular purpose and non-infringement
+* are disclaimed to the fullest extent permitted by law.
+
+*     Unless otherwise explicitly permitted by NATIONS, anyone may not duplicate, modify, transcribe
+* or otherwise distribute this software for any purposes, in whole or in part.
+*
+*     NATIONS products and technologies shall not be used for or incorporated into any products or systems
+* whose manufacture, use, or sale is prohibited under any applicable domestic or foreign laws or regulations. 
+* User shall comply with any applicable export control laws and regulations promulgated and administered by 
+* the governments of any countries asserting jurisdiction over the parties or transactions.
+**/
 
 /**
 *\*\file n32g430_rcc.h
 *\*\author Nations
 *\*\version v1.0.0
-*\*\copyright Copyright (c) 2019, Nations Technologies Inc. All rights reserved.
+*\*\copyright Copyright (c) 2022, Nations Technologies Inc. All rights reserved.
  */
 #ifndef __N32G430_RCC_H__
 #define __N32G430_RCC_H__
@@ -270,13 +290,18 @@ typedef enum
 #define RCC_ADCHCLK_DIV_OTHERS (RCC_CFG2_ADCHPRES_OTHERS)
 #define RCC_ADCHCLK_ENABLE     (RCC_AHB1CLKEN_ADCHCLKEN)
 
+/** LSE_TRIMR **/
+#define LSE_TRIMR_ADDR               ((uint32_t)0x40007010)
+
+#define LSE_NIM_MASK_VALUE           (0x400)
+#define LSE_GM_MASK_VALUE            (0x1FF)
+#define LSE_GM_MAX_VALUE             (0x1FF)
 /** RCC_CFGR3_Config **/
-#define RCC_BOR_RST_ENABLE ((uint32_t)0x00000040)
 
 /** LSE_configuration **/
-#define RCC_LSE_DISABLE ((uint8_t)RCC_REG_BIT_MASK)
-#define RCC_LSE_ENABLE  ((uint8_t)RCC_BDCTRL_LSEEN)
-#define RCC_LSE_BYPASS  ((uint8_t)RCC_BDCTRL_LSEBP)
+#define RCC_LSE_DISABLE (RCC_REG_BIT_MASK)
+#define RCC_LSE_ENABLE  (RCC_BDCTRL_LSEEN)
+#define RCC_LSE_BYPASS  (RCC_BDCTRL_LSEBP)
 
 /** LSE_CSS Flag **/
 #define RCC_LSE_LSECLKSSF (RCC_BDCTRL_LSECLKSSF)
@@ -370,7 +395,6 @@ typedef enum
 #define RCC_FLAG_PLLRD   ((uint8_t)0x39)
 #define RCC_FLAG_LSERD   ((uint8_t)0x41)
 #define RCC_FLAG_LSIRD   ((uint8_t)0x61)
-#define RCC_FLAG_BORRST  ((uint8_t)0x73)
 #define RCC_FLAG_BKPEMC  ((uint8_t)0x75)
 #define RCC_FLAG_MMURST  ((uint8_t)0x79)
 #define RCC_FLAG_PINRST  ((uint8_t)0x7A)
@@ -390,7 +414,6 @@ typedef enum
 #define RCC_INT_HSIRDIF    (RCC_CLKINT_HSIRDIF)
 #define RCC_INT_HSERDIF    (RCC_CLKINT_HSERDIF)
 #define RCC_INT_PLLRDIF    (RCC_CLKINT_PLLRDIF)
-#define RCC_INT_BORIF      (RCC_CLKINT_BORIF)
 #define RCC_INT_CLKSSIF    (RCC_CLKINT_CLKSSIF)
 #define RCC_INT_LSESSIF    (RCC_CLKINT_LSESSIF)
 /** Interrupts Enable **/
@@ -399,7 +422,6 @@ typedef enum
 #define RCC_INT_HSIRDIEN   (RCC_CLKINT_HSIRDIEN)
 #define RCC_INT_HSERDIEN   (RCC_CLKINT_HSERDIEN)
 #define RCC_INT_PLLRDIEN   (RCC_CLKINT_PLLRDIEN)
-#define RCC_INT_BORIEN     (RCC_CLKINT_BORIEN)
 #define RCC_INT_LSESSIEN   (RCC_CLKINT_LSESSIEN)
 /** Interrupts Clear **/
 #define RCC_INT_LSIRDICLR  (RCC_CLKINT_LSIRDICLR)
@@ -407,7 +429,6 @@ typedef enum
 #define RCC_INT_HSIRDICLR  (RCC_CLKINT_HSIRDICLR)
 #define RCC_INT_HSERDICLR  (RCC_CLKINT_HSERDICLR)
 #define RCC_INT_PLLRDICLR  (RCC_CLKINT_PLLRDICLR)
-#define RCC_INT_BORICLR    (RCC_CLKINT_BORICLR)
 #define RCC_INT_CLKSSICLR  (RCC_CLKINT_CLKSSICLR)
 #define RCC_INT_LSESSICLR  (RCC_CLKINT_LSESSICLR)
  
@@ -438,7 +459,8 @@ void RCC_ADC_PLL_Clock_Disable(void);
 void RCC_ADC_Hclk_Config(uint32_t ADC_hclk_prescaler);
 void RCC_ADC_Hclk_Enable(void);
 void RCC_ADC_Hclk_Disable(void);
-void RCC_LSE_Config(uint8_t RCC_LSE);
+
+void RCC_LSE_Config(uint32_t RCC_LSE,uint16_t LSE_Trim);
 void RCC_LSE_Clock_Security_System_Enable(void);
 void RCC_LSE_Clock_Security_System_Disable(void);
 FlagStatus RCC_LSE_Clock_Security_System_Status_Get(void);
@@ -463,8 +485,6 @@ void RCC_APB1_Peripheral_Clock_Disable(uint32_t APB1_periph);
 void RCC_AHB_Peripheral_Reset(uint32_t AHB_periph);
 void RCC_APB2_Peripheral_Reset(uint32_t APB2_periph);
 void RCC_APB1_Peripheral_Reset(uint32_t APB1_periph);
-void RCC_BOR_Reset_Enable(void);
-void RCC_BOR_Reset_Disable(void);
 void RCC_Backup_Reset(void);
 void RCC_MCO_PLL_Prescaler_Config(uint32_t MCO_PLL_prescaler);
 void RCC_MCO_Source_Config(uint32_t MCO_source);

@@ -1,0 +1,157 @@
+﻿Nations.N32G430_Library.2.0.0：
+1.删除DEMO中DBG配置和描述
+2.修改USART DEMO中USART宏定义问题
+3.在系统初始化和ADC TEMP DEMO中修改获取NVR函数
+4.优化PWR_SLEEP DEMO，修正GPIO_EXTI_Line_Set函数的输入参数
+5.优化PWR_STOP0 DEMO，修正GPIO_EXTI_Line_Set函数的输入参数
+6.修改RTC_Initialization_Mode_Enter函数
+7.修改RCC、I2C例程错误处理方式
+8.优化BEEPER demo
+9.修改RTC demo，增加RTC初始化判断
+10.优化PWR_AlarmWakeUpSTOP2和PWR_STOP0 DEMO
+11.U(S)ART增加错误中断处理
+12.修改DEMO中结构体初始化
+13.修改DMA_Reset函数，修改DMA_REMAP_TIM8_CH3宏定义值
+14.修改CompOut demo，增加比较器中断功能
+15.更新I2C驱动，修改模拟滤波使能函数
+16.修改USART TX GPIO配置
+17.修改SDK中的中文字符
+
+
+Nations.N32G430_Library.1.2.1：
+1.修改USART Interrupt demo 中断处理函数
+2.修改ADC DMA demo readme
+3.RTC_Time_Get 和RTC_SubSecond_Get函数在函数最后读取RTC_DATE寄存器
+4.修改system_n32g430.c文件，限定选择PLL为系统时钟源时，系统时钟最小为32MHz
+5.新增flash读保护demo
+6.修改LP_Transmit_Receive DEMO系统时钟源为HSE
+7.新增ADC_DifferentialMode Demo.
+8.修改n32g430.h文件, 修改ADC_DIFSEL_DIFSEL_1~ ADC_DIFSEL_DIFSEL_18 宏定义值
+
+Nations.N32G430_Library.1.2.0：
+1.修改 Get_UCID 和 Get_UID函数
+2.修改 RCC_LSE_TRIM() 函数注释，参考值是0x1D7
+3.删除 COMP3_OUTSEL_TIM5_OCREFCLEAR宏定义，COMP3输出没有TIM5_Ocrefclear信号
+4.修改 n32g430_rtc.c 文件 RTC_Initialization_Mode_Enter(void)函数
+5.修改 SPI_I2S_Clear_Flag_Status()函数
+6.修改 FLASH_OB_RDP2_ENABLE宏定义值
+7.修改 GPIO_DRIVER_8MA 宏定义值
+8.修改文件声明
+9.删除 USE_FULL_ASSERT 描述
+10.增加 IAR工程
+11.修改 IWDG_Reset DEMO，增加LSI测量
+12.修改void GPIOA_Pin_Reset(uint16_t pin),void GPIOB_Pin_Reset(uint16_t pin),void GPIOC_Pin_Reset(uint16_t pin),void GPIOD_Pin_Reset(uint16_t pin)函数
+13.在配置NVIC configuration之前增加NVIC priority group set
+14.在N32G430.h文件修改TIM_CTRL3_MMSEL_3 宏定义名称为 TIM_CTRL2_MMSEL_3
+15.修改 n32g430_adc.c 文件 void ADC_Initializes(ADC_InitType* ADC_initstruct) 功能
+16.在System_Clock_Set函数中加入版本判断，根据芯片版本选择不同Flash时延
+17.I2C添加双地址模式例程
+18.USART增加SmartCard和IrDA_Tx&Rx DEMO
+19.修改ADC_TEMP DEMO，从新地址获取TRIM值
+20.M4F demo优化
+21.删除COMP_LowPower_Clock_Select()函数
+22.更新TIM模块readme说明以及部分TIMdemo的KEIL配置特性
+23.优化FPU及CAN模块demo代码
+24.修改n32g430_dma.h 文件中DMA_REMAP_TIM2_CH3、DMA_REMAP_TIM2_CH4、DMA_REMAP_TIM2_UP三个宏定义的值
+25.RTC增加闹钟唤醒STANDBY模式DEMO
+
+Nations.N32G430_Library.1.0.1：
+1.修改LPTIM DEMO中的产生测试信号的函数
+2.n32g430_wwdg.h/n32g430_tim.h/log.h添加__cplusplu宏
+3.修复I2S初始化函数MCLK配置错误
+4.添加 LIN demo
+5.增加PLL_TrimValueLoad()函数，并在系统时钟初始化和从STOP2模式唤醒后配置系统时钟时调用
+6.更新ADC_TEMP demo ，使用新的公式计算温度值
+7.TIM_DCTRL后面的寄存器无法应用DMA Burst功能，修改相应代码
+8.I2C_Master_Int例程添加错误中断处理
+9.修改PLLHSIPRE寄存器初始化值
+10.在PWR_AlarmWakeUp和PWR_STOP例程的SYSCLKConfig_STOP函数内添加PLL_TrimValueLoad()函数、用FLASH_Latency_Set函数替换原FLASH->AC的操作
+11.修改 FLASH_Option_Bytes_User_Get 函数和 FLASH_Option_Bytes_DATA_Program函数
+12.修改 n32g430_flash.c文件部分注释
+13.修改 n32g430_comp.c文件，修改 COMP_Interrupt_Status_OneComp_Clear函数
+14.修改 n32g430.h文件，修改 "#define COMP2_CTRL_FILTVAL   ((uint32_t)0000200000)" 为 "#define COMP2_CTRL_FILTVAL   ((uint32_t)0x00200000)"
+
+Nations.N32G430_Library.1.0.0：
+初始版本
+
+
+Nations.N32G430_Library.2.0.0：
+1.Delect DBG configuration and discription in DEMO
+2.Modify USART macro definition problem in USART DEMO
+3.Modify get nvr function in system initialization and ADC TEMP DEMO
+4.Optimize PWR_SLEEP DEMO, correct input parameters of GPIO_EXTI_Line_Set function
+5.Optimize PWR_STOP0 DEMO, correct input parameters of GPIO_EXTI_Line_Set function
+6.Modify RTC_Initialization_Mode_Enter function
+7.Modify the error handling of RCC and I2C routines.
+8.Optimize BEEPER demo
+9.Optimize RTC demo，add RTC initialization judgment
+10.Optimize PWR_AlarmWakeUpSTOP2 and PWR_STOP0 DEMO
+11.U(S)ART adds interrupt error handling
+12.Modify DEMO structure initialization
+13.Modify DMA_Reset function, modify the value of the DMA_REMAP_TIM8_CH3 macro definition
+14.Optimize CompOut demo，add COMP interrupt function
+15.Update I2C API，modified analog filter enable function
+16.Modify USART TX GPIO configuration
+17.Modify the Chinese characters in the SDK
+
+Nations.N32G430_Library.1.2.1：
+1.Modify USART Interrupt demo interrupt handle function
+2.Modify ADC DMA demo readme
+3.RTC_Time_Get and RTC_SubSecond_Get function read RTC_DATE register in the end
+4.Modify system_n32g430.c file，when PLL is selected as the system clock source, the minumum system clock is 32MHz
+5.Add flash protection demo 
+6.Modify LP_Transmit_Receive demo system clock to HSE
+7.Add ADC_DifferentialMode demo 
+8.Modify n32g430.h file, Modify ADC_DIFSEL_DIFSEL_1~ ADC_DIFSEL_DIFSEL_18 macro definition value
+
+Nations.N32G430_Library.1.2.0：
+1. Modify Get_UCID and Get_UID function
+2. Modify RCC_LSE_TRIM() function comment, recommended value is 0x1D7.
+3. Delete COMP3_OUTSEL_TIM5_OCREFCLEAR macro definition,the output selection for COMP3 don't have TIM5_Ocrefclear signal 
+4. Modify n32g430_rtc.c file RTC_Initialization_Mode_Enter(void) function
+5. Modify SPI_I2S_Clear_Flag_Status() function
+6. Modify FLASH_OB_RDP2_ENABLE macro definition value
+7. Modify GPIO_DRIVER_8MA macro definition value
+8. Modify file declaration
+9. Delet USE_FULL_ASSERT description
+10. Add IAR DEMO
+11. Modify IWDG_Reset DEMO, add LSI measure
+12. Modify void GPIOA_Pin_Reset(uint16_t pin),void GPIOB_Pin_Reset(uint16_t pin),void GPIOC_Pin_Reset(uint16_t pin),void GPIOD_Pin_Reset(uint16_t pin)
+13. Add NVIC priority group set before NVIC configuration 
+14. Modify TIM_CTRL3_MMSEL_3 to TIM_CTRL2_MMSEL_3 in N32G430.h
+15. Modify n32g430_adc.c file void ADC_Initializes(ADC_InitType* ADC_initstruct) function
+16. Add chip version adjustment in System_Clock_Set function，select different Flash access time delay accroding to different chip version.
+17. I2C add dual address mode demo
+18. USART add SmartCard and IrDA_Tx&Rx DEMO
+19. Modify ADC_TEMP DEMO，get trim value from new address
+20.M4F demo optimization
+21. Delet COMP_LowPower_Clock_Select() function
+22.Modify readme of TIM,modify configure of KEIL in TIM's demo
+23.Optimized FPU and CAN module demo code
+24.Modify the values of DMA_REMAP_TIM2_CH3,DMA_REMAP_TIM2_CH4 and DMA_REMAP_TIM2_UP macro definitions in the n32g430_dma.h file. 
+25.RTC add alarm wakeup STANDBY mode DEMO
+
+Nations.N32G430_Library.1.0.1：
+1. Modify the function to generate test signal in LPTIM DEMO.
+2. In n32g430_wwdg.h/n32g430_tim.h/log.h add __cplusplus.
+3. Modify I2S initial function MCLK configuration issue
+4. Add LIN demo
+5. Add PLL_TrimValueLoad() function,and called in configuring the system clock
+6. Modify ADC_TEMP demo,calculation formula update
+7. TIM_DCTRL‘s subsequent register cannot apply the DAM Burst function, and modify the corresponding code 
+8. Add error interrupt handling in I2C_Master_Int demo
+9. Modify the initial value of the PLLHSIPRE register
+10. Add the PLL_TrimValueLoad() function and replace FLASH->AC operations with FLASH_Latency_Set function inside the SYSCLKConfig_STOP function of the PWR AlarnWakeUp and PWR_STOP demo, main.c file version upgraded to v1.0.1
+11. Modify FLASH_Option_Bytes_User_Get function and FLASH_Option_Bytes_DATA_Program function
+12. Modify n32g430_flash.c file section comments
+13. Modify n32g430_comp.c file ,"COMP_Interrupt_Status_OneComp_Clear" is error 
+14. Modify n32g430.h file ,modify "#define COMP2_CTRL_FILTVAL   ((uint32_t)0000200000)" to "#define COMP2_CTRL_FILTVAL   ((uint32_t)0x00200000)"
+
+Nations.N32G430_Library.1.0.0：
+Initial release
+
+
+
+
+
+
