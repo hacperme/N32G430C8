@@ -1,0 +1,10 @@
+/quectel_build/release
+/quectel_build/build
+*.pyc
+*.obj
+*.o
+/**/CMakeFiles/*
+CMakeCache.txt
+cmake_install.cmake
+/.vscode
+*.map

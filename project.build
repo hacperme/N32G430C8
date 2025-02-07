@@ -1,0 +1,30 @@
+# avoid 'Entering|Leaving directory' messages
+ifndef VERBOSE
+MAKEFLAGS += --no-print-directory
+endif
+
+# The command to remove a file.
+RM = cmake -E remove_directory
+
+build:Makefile
+	cmake -S . -B $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME} -G "Unix Makefiles" $(cmake_definition)
+	cd $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME} && mingw32-make -j8
+	
+build_r:Makefile
+	cd $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME} && mingw32-make -j8
+
+ninja:Makefile
+	cmake -S . -B $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME} -G Ninja $(cmake_definition)
+	cd $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME} && ninja
+ninja_r:Makefile
+	cd $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME} && ninja
+
+clean:
+	$(RM) $(SDK_BASE)/quectel_build/build/${PROJEECT_NAME}
+	$(RM) $(SDK_BASE)/quectel_build/release
+
+menuconfig:
+	python $(SDK_BASE)/quectel_build/tools/kconfig/menuconfig.py
+	python $(SDK_BASE)/quectel_build/tools/kconfig/genconfig.py
+
+.PHONY:build build_r ninja ninja_r clean menuconfig
