@@ -8,7 +8,7 @@
         {
             "name": "Cortex Debug",
             "cwd": "${workspaceFolder}",
-            "executable": "${workspaceRoot}/quectel_build/release/target/QUEC_N32G430.elf",
+            "executable": "${workspaceRoot}/quectel_build/release/target/QEM25FANA_R01A01_V01.elf",
             "request": "launch",
             "type": "cortex-debug",
             "runToEntryPoint": "main",
@@ -18,7 +18,7 @@
             "interface": "swd",
             "armToolchainPath": "${workspaceRoot}/quectel_build/tools/gcc-arm-none-eabi-10.3-2021.10-win32/bin",
             "symbolFiles":[
-                "${workspaceRoot}/quectel_build/release/target/QUEC_N32G430.elf",
+                "${workspaceRoot}/quectel_build/release/target/QEM25FANA_R01A01_V01.elf",
             ],
             "preRestartCommands":[
                 "monitor reset"
