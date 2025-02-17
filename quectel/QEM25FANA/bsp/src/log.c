@@ -57,12 +57,12 @@
 
 #include "n32g430.h"
 
-#define LOG_USARTx      USART1
-#define LOG_PERIPH      RCC_APB2_PERIPH_USART1
-#define LOG_GPIO        GPIOA
-#define LOG_PERIPH_GPIO RCC_AHB_PERIPH_GPIOA
-#define LOG_TX_PIN      GPIO_PIN_9
-#define LOG_RX_PIN      GPIO_PIN_10
+#define LOG_USARTx      UART4
+#define LOG_PERIPH      RCC_APB2_PERIPH_UART4
+#define LOG_GPIO        GPIOB
+#define LOG_PERIPH_GPIO RCC_AHB_PERIPH_GPIOB
+#define LOG_TX_PIN      GPIO_PIN_0
+#define LOG_RX_PIN      GPIO_PIN_1
 
 void log_init(void)
 {
@@ -75,7 +75,7 @@ void log_init(void)
     GPIO_Structure_Initialize(&GPIO_InitStructure);
     GPIO_InitStructure.Pin            = LOG_TX_PIN;
     GPIO_InitStructure.GPIO_Mode      = GPIO_MODE_AF_PP;
-    GPIO_InitStructure.GPIO_Alternate = GPIO_AF5_USART1;
+    GPIO_InitStructure.GPIO_Alternate = GPIO_AF7_UART4;
     GPIO_InitStructure.GPIO_Pull      = GPIO_PULL_UP;
     GPIO_Peripheral_Initialize(LOG_GPIO, &GPIO_InitStructure);
 
