@@ -35,6 +35,12 @@ echo %PATH%
 echo=
 
 set buildtype_src=%1
+set buildproject=%2
+set buildvesion=%3
+set buildsubversin=%4
+set buildtype=%5
+
+
 set buildoption=
 if "%buildtype_src%"=="" (
 	set buildoption=r
@@ -72,6 +78,22 @@ if "%buildtype_src%"=="" (
 	goto helpinfo
 )
 
+if "%buildtype%"=="" (
+	set buildtype=release
+)
+
+if "%buildproject%"=="" (
+	set buildproject=QEM25FANA
+)
+
+if "%buildvesion%"=="" (
+	set buildvesion=R01A01
+)
+
+if "%buildsubversin%"=="" (
+	set buildsubversin=V01
+)
+
 echo=
 
 if /i "%buildoption%"=="h" (
@@ -88,12 +110,12 @@ echo %cd%
 
 if /i "%buildoption%"=="clean" (
 	echo=
-	mingw32-make options=clean
+	mingw32-make options=clean project=%buildproject% version=%buildvesion% subversion=%buildsubversin% bulid_type=%buildtype%
 	goto exit
 ) else if /i "%buildoption%"=="r" (
 	echo=
 	@REM mingw32-make build_r
-	mingw32-make options=ninja_r
+	mingw32-make options=ninja_r project=%buildproject% version=%buildvesion% subversion=%buildsubversin% bulid_type=%buildtype%
 	goto exit
 ) else if /i "%buildoption%"=="menuconfig" (
 	echo=
@@ -101,18 +123,18 @@ if /i "%buildoption%"=="clean" (
 	goto exit
 ) else if /i "%buildoption%"=="ninja" (
 	echo=
-	mingw32-make options=ninja
+	mingw32-make options=ninja project=%buildproject% version=%buildvesion% subversion=%buildsubversin% bulid_type=%buildtype%
 	goto exit
 ) else if /i "%buildoption%"=="ninja_r" (
 	echo=
-	mingw32-make options=ninja_r
+	mingw32-make options=ninja_r project=%buildproject% version=%buildvesion% subversion=%buildsubversin% bulid_type=%buildtype%
 	goto exit
 ) else if /i "%buildoption%"=="new" (
 	echo cleaning...
 	echo=
-	mingw32-make options=clean
+	mingw32-make options=clean project=%buildproject% version=%buildvesion% subversion=%buildsubversin% bulid_type=%buildtype%
 	@REM mingw32-make build
-	mingw32-make options=ninja
+	mingw32-make options=ninja project=%buildproject% version=%buildvesion% subversion=%buildsubversin% bulid_type=%buildtype%
 	goto exit
 ) else (
 	goto exit
@@ -127,7 +149,7 @@ echo ********************************************************************
 echo=
 :buildinfo
 echo For your information:
-echo.Usage: %~n0 r/new 
+echo.Usage: %~n0 r/new project version subversion debug/release
 echo.       %~n0 clean
 echo.       %~n0 h/-h
 echo.Example:

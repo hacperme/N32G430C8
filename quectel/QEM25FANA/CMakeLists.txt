@@ -45,4 +45,4 @@ sdk_set_main_file(main.c)
 
 sdk_add_include_directories(.)
 
-project(${PROJEECT_NAME})
+project(${PROJECT}_${VERSION}_${SUBVERSION})

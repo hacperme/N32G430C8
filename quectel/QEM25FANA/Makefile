@@ -3,15 +3,16 @@ SDK_ROOT_PATH ?= ../../
 SDK_BASE = $(abspath ../../)
 
 KCONFIG_CONFIG ?= proj.conf
-PROJEECT_NAME ?= QUEC_N32G430
 
 export SDK_BASE
 export KCONFIG_CONFIG
-export PROJEECT_NAME
+export project
+export version
+export subversion
 
-BUILD_TYPE ?= debug
+bulid_type ?= debug
 #cmake definition config
-cmake_definition+= -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DPROJEECT_NAME=${PROJEECT_NAME}
+cmake_definition+= -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DPROJECT=${project} -DVERSION=${version} -DSUBVERSION=${subversion}
 
 include $(SDK_BASE)/project.build
 
