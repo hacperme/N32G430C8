@@ -56,8 +56,8 @@
 
 #include "log.h"
 #include "main.h"
-#include "bsp_led.h"
 #include "bsp_delay.h"
+#include "led.h"
 
 
 /**
@@ -68,15 +68,7 @@
 **/
 int main(void)
 {
-    /* Initialize Led1~Led3 as output push-pull mode */
-    LED_Initialize(LED1_GPIO_PORT, LED1_GPIO_PIN | LED2_GPIO_PIN );
-
-    /* Turn off Led1~Led3 */
-    LED_Off(LED1_GPIO_PORT, LED1_GPIO_PIN | LED2_GPIO_PIN );
-
-    /* Turn on Led2~Led3 */
-    LED_On(LED2_GPIO_PORT, LED2_GPIO_PIN );
-
+    led_init();
     /* Delay 1s */
     SysTick_Delay_Ms(1000);
     log_init();
@@ -85,25 +77,18 @@ int main(void)
     {
 
         printf("hello w\r\n");
-        /* Turn on Led1 */
-        LED1_ON;
-        
-        /* Toggle LED2 */
-        LED_Toggle(LED2_GPIO_PORT, LED2_GPIO_PIN);
-        
-        /* Delay 1s */
+
+        led_set(LED_ID_1, LED_MODE_ON, 0, 0);
+        led_set(LED_ID_2, LED_MODE_ON, 0, 0);
+        led_set(LED_ID_3, LED_MODE_ON, 0, 0);
+        led_set(LED_ID_4, LED_MODE_ON, 0, 0);
         SysTick_Delay_Ms(1000);
-        
-        /* Toggle LED3 */
-       
-        
-        /* Delay 1s */
-        SysTick_Delay_Ms(1000);
-        
-        /* Turn off LED1 */
-        LED1_OFF;
-        
-        /* Delay 1s */
+
+        led_set(LED_ID_1, LED_MODE_OFF, 0, 0);
+        led_set(LED_ID_2, LED_MODE_OFF, 0, 0);
+        led_set(LED_ID_3, LED_MODE_OFF, 0, 0);
+        led_set(LED_ID_4, LED_MODE_OFF, 0, 0);
+
         SysTick_Delay_Ms(1000);
     }
 }
