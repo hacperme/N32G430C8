@@ -39,7 +39,7 @@ sdk_add_compile_options(
 # )
 
 sdk_add_subdirectory_if_exist(bsp)
-
+sdk_add_subdirectory_if_exist(task)
 
 sdk_set_main_file(main.c)
 

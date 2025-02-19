@@ -58,7 +58,36 @@
 #include "main.h"
 #include "bsp_delay.h"
 #include "led.h"
+#include "task.h"
 
+#define MAX_TASK_NUM 5
+static task_item_t g_task_mem[MAX_TASK_NUM];
+
+static void led_test_task(void *arg)
+{
+    static int cnt = 0;
+    if(cnt%2)
+    {
+        led_set(LED_ID_1, LED_MODE_ON, 0, 0);
+        led_set(LED_ID_2, LED_MODE_ON, 0, 0);
+        led_set(LED_ID_3, LED_MODE_ON, 0, 0);
+        led_set(LED_ID_4, LED_MODE_ON, 0, 0);
+    }
+    else
+    {
+        led_set(LED_ID_1, LED_MODE_OFF, 0, 0);
+        led_set(LED_ID_2, LED_MODE_OFF, 0, 0);
+        led_set(LED_ID_3, LED_MODE_OFF, 0, 0);
+        led_set(LED_ID_4, LED_MODE_OFF, 0, 0);
+    }
+    
+    cnt++;
+}
+
+static void helloword(void *arg)
+{
+    printf("hello w\r\n");
+}
 
 /**
  *\*\name   main.
@@ -68,28 +97,30 @@
 **/
 int main(void)
 {
+    task_init(g_task_mem, sizeof(g_task_mem));
     led_init();
-    /* Delay 1s */
-    SysTick_Delay_Ms(1000);
     log_init();
+
+    int task_id = task_create(led_test_task, 1, 1000, 1, NULL);
+    printf("create task %d\r\n", task_id);
+    task_id = task_create(helloword, 1, 500, 1, NULL);
+    printf("create task %d\r\n", task_id);
+#if 0
+    RCC_ClocksType RCC_Clocks;
+    RCC_Clocks_Frequencies_Value_Get(&RCC_Clocks);
+
+    printf("Pclk1Freq  == %d\r\n",RCC_Clocks.Pclk1Freq);
+    printf("Pclk2Freq  == %d\r\n",RCC_Clocks.Pclk2Freq);
+
+    printf("HclkFreq  == %d\r\n",RCC_Clocks.HclkFreq);
+    printf("SysclkFreq  == %d\r\n",RCC_Clocks.SysclkFreq);
+#endif
 
     while(1)
     {
-
-        printf("hello w\r\n");
-
-        led_set(LED_ID_1, LED_MODE_ON, 0, 0);
-        led_set(LED_ID_2, LED_MODE_ON, 0, 0);
-        led_set(LED_ID_3, LED_MODE_ON, 0, 0);
-        led_set(LED_ID_4, LED_MODE_ON, 0, 0);
-        SysTick_Delay_Ms(1000);
-
-        led_set(LED_ID_1, LED_MODE_OFF, 0, 0);
-        led_set(LED_ID_2, LED_MODE_OFF, 0, 0);
-        led_set(LED_ID_3, LED_MODE_OFF, 0, 0);
-        led_set(LED_ID_4, LED_MODE_OFF, 0, 0);
-
-        SysTick_Delay_Ms(1000);
+        task_poll();
+        SysTick_Delay_Ms(1);
+        task_tick();
     }
 }
 
