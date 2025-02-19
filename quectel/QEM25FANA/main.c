@@ -59,6 +59,7 @@
 #include "bsp_delay.h"
 #include "led.h"
 #include "task.h"
+#include "control.h"
 
 #define MAX_TASK_NUM 5
 static task_item_t g_task_mem[MAX_TASK_NUM];
@@ -97,10 +98,12 @@ static void helloword(void *arg)
 **/
 int main(void)
 {
-    task_init(g_task_mem, sizeof(g_task_mem));
+    
     led_init();
+    control_gpio_init();
     log_init();
 
+    task_init(g_task_mem, sizeof(g_task_mem));
     int task_id = task_create(led_test_task, 1, 1000, 1, NULL);
     printf("create task %d\r\n", task_id);
     task_id = task_create(helloword, 1, 500, 1, NULL);
