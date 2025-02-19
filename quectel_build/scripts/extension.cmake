@@ -176,7 +176,11 @@ macro(project name)
   add_custom_command(TARGET ${EXEC_FILE} POST_BUILD
   COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${EXEC_FILE}> ${BIN_FILE}
   COMMAND ${CMAKE_OBJCOPY} -Oihex $<TARGET_FILE:${EXEC_FILE}> ${HEX_FILE}
-  # COMMAND ${SIZE} $<TARGET_FILE:${EXEC_FILE}>
-  COMMENT "Generate ${BIN_FILE}\r\n")
+  COMMAND python  ${SDK_BASE}/quectel_build/scripts/codesize.py --map ${MAP_FILE} 
+    --outobj ${EXECUTABLE_OUTPUT_PATH}/outobj.csv 
+    --outlib ${EXECUTABLE_OUTPUT_PATH}/outlib.csv
+    --outsect ${EXECUTABLE_OUTPUT_PATH}/outsect.csv
+  COMMENT "Generate ${BIN_FILE}\r\n"
+  )
 
 endmacro()

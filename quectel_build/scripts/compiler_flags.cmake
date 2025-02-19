@@ -15,7 +15,7 @@ sdk_add_link_options(
     -mcpu=cortex-m4
     -mthumb
     -Wall
-    --specs=nosys.specs
+    --specs=nano.specs
     -Xlinker --gc-sections
     -Wl,--print-memory-usage
 )
