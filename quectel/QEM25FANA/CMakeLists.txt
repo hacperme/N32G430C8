@@ -24,9 +24,13 @@ find_package(quec_n32g430_sdk REQUIRED HINTS $ENV{SDK_BASE}/quectel_build/script
 
 sdk_set_linker_script($ENV{SDK_BASE}/quectel_build/config/n32g430_flash.ld)
 
-# sdk_add_compile_definitions(
-#     "-D_POSIX_SOURCE"
-#     )
+string(TIMESTAMP BUILD_TIMESTAMP "%Y-%m-%d %H:%M:%S")
+sdk_add_compile_definitions(
+    "-DPROJECT=\"${PROJECT}\""
+    "-DVERSION=\"${VERSION}\"" 
+    "-DSUBVERSION=\"${SUBVERSION}\""
+    "-DBUILD_TIMESTAMP=\"${BUILD_TIMESTAMP}\""
+)
 
 sdk_add_compile_options(
     -include quec_prj_config.h
