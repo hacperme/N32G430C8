@@ -61,6 +61,7 @@
 #include "task.h"
 #include "control.h"
 #include "bsp_adc.h"
+#include "bsp_iwdg.h"
 
 #define MAX_TASK_NUM 5
 static task_item_t g_task_mem[MAX_TASK_NUM];
@@ -101,6 +102,13 @@ static void adc_test_task(void *arg)
     printf("bat adc value:%d\r\n", adc_val);
 }
 
+static void wdg_test_task(void *arg)
+{
+    bsp_iwdg_feed();
+    printf("feed iwdg\r\n");
+
+}
+
 /**
  *\*\name   main.
  *\*\fun    main function.
@@ -110,10 +118,30 @@ static void adc_test_task(void *arg)
 int main(void)
 {
     
+    
     led_init();
     control_gpio_init();
     bsp_adc_init();
     log_init();
+
+    /* Check if the system has resumed from IWDG reset */
+    if(RCC_Flag_Status_Get(RCC_FLAG_IWDGRST) != RESET)
+    {
+        /* Clear reset flags */
+        RCC_Reset_Flag_Clear();
+        /* IWDGRST flag set */
+        printf("\r\n Reset By IWDG \r\n");
+    }
+    if(bsp_iwdg_config(BSP_DEFALUT_IWDG_TIMEOUT_MS) == 0)
+    {
+        bsp_iwdg_ctl(1);
+        printf("IWDG enable\r\n");
+    }
+    else
+    {
+        printf("IWDG config err \r\n");
+    }
+    
 
     task_init(g_task_mem, sizeof(g_task_mem));
     int task_id = task_create(led_test_task, 1, 1000, 1, NULL);
@@ -121,6 +149,8 @@ int main(void)
     task_id = task_create(helloword, 0, 500, 1, NULL);
     printf("create task %d\r\n", task_id);
     task_id = task_create(adc_test_task, 1, 1000, 1, NULL);
+    printf("create task %d\r\n", task_id);
+    task_id = task_create(wdg_test_task, 1, BSP_DEFALUT_IWDG_TIMEOUT_MS/2, 1, NULL);
     printf("create task %d\r\n", task_id);
 #if 0
     RCC_ClocksType RCC_Clocks;
