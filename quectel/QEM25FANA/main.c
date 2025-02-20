@@ -89,7 +89,7 @@ static void led_test_task(void *arg)
 
 static void helloword(void *arg)
 {
-    printf("hello w\r\n");
+    printf("hello w\r\n%s\r\n%s\r\n%s\r\n%s\r\n", PROJECT, VERSION, SUBVERSION, BUILD_TIMESTAMP);
 }
 
 static void adc_test_task(void *arg)
@@ -117,8 +117,6 @@ static void wdg_test_task(void *arg)
 **/
 int main(void)
 {
-    
-    
     led_init();
     control_gpio_init();
     bsp_adc_init();
