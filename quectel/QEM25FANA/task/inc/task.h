@@ -28,6 +28,7 @@ WHEN				WHO			WHAT, WHERE, WHY
 extern "C" {
 #endif
 
+#define TASK_TICK_FREQ (1000)   // tick 的周期 1 ms 
 
 
 typedef void (*task_func_t)(void *arg);
@@ -59,6 +60,10 @@ int task_delete(int task_id);
 void task_tick(void);
 
 unsigned long task_get_tick(void);
+
+void task_delay_ms(unsigned long ms);
+
+void task_delay_us(unsigned long ms);
 
 
 #ifdef __cplusplus

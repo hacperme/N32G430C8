@@ -30,7 +30,7 @@ extern "C" {
 #include <stdlib.h>
 
 #include "task.h"
-
+#include "bsp.h"
 
 static struct 
 {
@@ -40,6 +40,15 @@ static struct
     unsigned int task_num;
 }g;
 
+
+static void SysTick_Init(uint32_t NUM)
+{
+    /* SystemCoreClock / NUM */
+    if (SysTick_Config(SystemClockFrequency / NUM))
+    {
+        while (1);
+    }
+}
 
 
 int task_init(void *buffer, unsigned int size)
@@ -52,6 +61,7 @@ int task_init(void *buffer, unsigned int size)
     memset(buffer, 0, size);
     g.task_size = size/sizeof(task_item_t);
     g.task = (task_item_t *)buffer;
+    SysTick_Init(TASK_TICK_FREQ);
     return ret;
 }
 
@@ -161,6 +171,37 @@ void task_tick(void)
 unsigned long task_get_tick(void)
 {
     return g.tick;
+}
+
+void task_delay_ms(unsigned long ms)
+{
+    unsigned long tick = g.tick;
+    tick += ms;
+    while (g.tick < tick)
+    {
+        /* code */
+    }
+}
+
+void task_delay_us(unsigned long us)
+{
+    uint32_t i;
+    RCC_ClocksType RCC_Clocks;
+
+    SysTick->CTRL &=~ SysTick_CTRL_ENABLE_Msk;
+    RCC_Clocks_Frequencies_Value_Get(&RCC_Clocks);
+    SysTick_Init(1000000);
+
+    for(i=0;i<us;i++)
+    {
+        /* When the counter value decreases to 0, bit 16 of the CRTL register will be set to 1 */
+        /* When set to 1, reading this bit will clear it to 0 */
+        while( !((SysTick->CTRL)&(1<<16)) );
+    }
+    /* Turn off the SysTick timer */
+    SysTick->CTRL &=~ SysTick_CTRL_ENABLE_Msk;
+
+    SysTick_Init(TASK_TICK_FREQ);
 }
 
 #ifdef __cplusplus

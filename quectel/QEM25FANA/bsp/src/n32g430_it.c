@@ -55,6 +55,7 @@
 
 #include "n32g430.h"
 #include "n32g430_it.h"
+#include "task.h"
 
 
 /** Cortex-M4 Processor Exceptions Handlers **/
@@ -153,6 +154,7 @@ void DebugMon_Handler(void)
 **/
 void SysTick_Handler(void)
 {
+    task_tick();
 }
 
 /** N32G430 Peripherals Interrupt Handlers, interrupt handler's name please refer to the startup file (startup_n32g430.s) **/

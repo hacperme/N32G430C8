@@ -55,7 +55,6 @@
 #include <stdio.h>
 
 #include "main.h"
-#include "bsp_delay.h"
 #include "led.h"
 #include "task.h"
 #include "control.h"
@@ -116,6 +115,7 @@ static void wdg_test_task(void *arg)
 
 }
 
+
 /**
  *\*\name   main.
  *\*\fun    main function.
@@ -128,6 +128,7 @@ int main(void)
     control_gpio_init();
     bsp_adc_init();
     mcu_uart4_init();
+    FLASH_ICache_Enable();
 
     /* Check if the system has resumed from IWDG reset */
     if(RCC_Flag_Status_Get(RCC_FLAG_IWDGRST) != RESET)
@@ -171,8 +172,6 @@ int main(void)
     while(1)
     {
         task_poll();
-        SysTick_Delay_Ms(1);
-        task_tick();
     }
 }
 
