@@ -54,7 +54,6 @@
 
 #include <stdio.h>
 
-#include "log.h"
 #include "main.h"
 #include "bsp_delay.h"
 #include "led.h"
@@ -62,6 +61,7 @@
 #include "control.h"
 #include "bsp_adc.h"
 #include "bsp_iwdg.h"
+#include "bsp_uart.h"
 
 #define MAX_TASK_NUM 5
 static task_item_t g_task_mem[MAX_TASK_NUM];
@@ -100,6 +100,13 @@ static void adc_test_task(void *arg)
 
     adc_val = bsp_adc_read(ADC_CH_BAT);
     printf("bat adc value:%d\r\n", adc_val);
+
+    unsigned char buff[20] = {0};
+    if(mcu_uart4_read(buff, 19))
+    {
+        buff[19] = 0;
+        printf("recv:%s\r\n", buff);
+    }
 }
 
 static void wdg_test_task(void *arg)
@@ -120,7 +127,7 @@ int main(void)
     led_init();
     control_gpio_init();
     bsp_adc_init();
-    log_init();
+    mcu_uart4_init();
 
     /* Check if the system has resumed from IWDG reset */
     if(RCC_Flag_Status_Get(RCC_FLAG_IWDGRST) != RESET)
